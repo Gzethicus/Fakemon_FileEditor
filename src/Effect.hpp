@@ -11,6 +11,7 @@ class Effect {
     int operation;
     float value;
     bool targetSelf;
+    int targetStat;
 
     // Operations
   public:
@@ -24,8 +25,11 @@ class Effect {
     void setOperator (int operation);
     void setValue (float value);
     void setTarget (bool self);
+    void setTargetStat (int stat);
 
   private:
     string getStringOperator ();
+    string getStringTarget ();
+    string getStringStat ();
 };
 #endif

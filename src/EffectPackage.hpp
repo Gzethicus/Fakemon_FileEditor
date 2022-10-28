@@ -7,11 +7,11 @@
 
 #include "Move.hpp"
 #include "Effect.hpp"
-#include "Package.hpp"
+#include "IPackage.hpp"
 
 using namespace std;
 
-class EffectPackage : public Package{
+class EffectPackage : public IPackage{
   // Attributes
 private:
   unordered_map<string, Effect> effects;
@@ -19,7 +19,7 @@ private:
   // Operations
 public:
   vector<string> getNames ();
-  Move get (string name);
+  Effect get (string name);
   /// exports the package as a JSON string
   string jsonExport ();
   void addEffect (string name, Effect effect);

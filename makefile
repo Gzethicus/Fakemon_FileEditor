@@ -9,6 +9,6 @@ Effect.o: src/Effect.hpp
 	mkdir -p build
 	g++ -o build/Effect.o -c src/Effect.cpp
 
-EffectPackage.o: src/EffectPackage.hpp src/Package.hpp
+EffectPackage.o: src/EffectPackage.hpp src/IPackage.hpp
 	mkdir -p build
 	g++ -o build/EffectPackage.o -c src/EffectPackage.cpp 
