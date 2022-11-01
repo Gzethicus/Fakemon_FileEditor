@@ -8,6 +8,8 @@ using namespace std;
 
 
 int main(int argc,char* argv[]) {
+    Json::FastWriter fastWriter;
+
     Effect test = Effect();
     test.setTarget(true);
     test.setTargetStat(1);
@@ -25,12 +27,12 @@ int main(int argc,char* argv[]) {
 
     cout << "test:\n";
     cout << test.getFormattedStats();
-    cout << test.jsonExport() << endl;
     cout << "test2:\n";
     cout << test2.getFormattedStats();
-    cout << testPackage.jsonExport();
+    cout << fastWriter.write(test.jsonExport());
+    cout << fastWriter.write(testPackage.jsonExport());
 
-    EffectPackage testPackage2 = EffectPackage(testPackage.jsonExport());
+    EffectPackage testPackage2 = EffectPackage(fastWriter.write(testPackage.jsonExport()));
 
     return 0;
 }

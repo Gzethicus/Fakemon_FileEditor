@@ -32,20 +32,20 @@ Json::Value Effect::jsonExport (){
 string Effect::getStringOperator (){
     switch (this->operation){
         case 0:
-            return "add";
+            return "Add";
         case 1:
-            return "mult";
+            return "Mult";
         default:
-            return "undefined";
+            return "Undefined";
     }
 }
 
 string Effect::getStringTarget (){
     switch (this->targetSelf){
         case true:
-            return "self";
+            return "Self";
         case false:
-            return "opponent";
+            return "Opponent";
     }
 }
 
@@ -60,7 +60,7 @@ string Effect::getStringStat (){
         case 3:
             return "Spd";
         default:
-            return "undefined";
+            return "Undefined";
     }
 }
 
