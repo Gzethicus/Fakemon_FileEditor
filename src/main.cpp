@@ -1,4 +1,5 @@
 #include <iostream>
+#include <jsoncpp/json/json.h>
 
 #include "Effect.hpp"
 #include "EffectPackage.hpp"
@@ -24,9 +25,12 @@ int main(int argc,char* argv[]) {
 
     cout << "test:\n";
     cout << test.getFormattedStats();
+    cout << test.jsonExport() << endl;
     cout << "test2:\n";
     cout << test2.getFormattedStats();
     cout << testPackage.jsonExport();
+
+    EffectPackage testPackage2 = EffectPackage(testPackage.jsonExport());
 
     return 0;
 }

@@ -9,6 +9,6 @@ using namespace std;
 class IPackage{
     public:
         virtual vector<string> getNames() = 0;
-        virtual string jsonExport() = 0;
+        virtual Json::Value jsonExport() = 0;
 };
 #endif

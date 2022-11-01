@@ -2,7 +2,13 @@
 
 using namespace std;
 
-Effect::Effect() : targetSelf{false}, targetStat{0}, operation{0}, value{0.f}{
+Effect::Effect() : targetSelf{false}, targetStat{0}, operation{0}, value{0.f}{}
+
+Effect::Effect (Json::Value val){
+    this->targetSelf = val["targetSelf"].asBool();
+    this->targetStat = val["stat"].asInt();
+    this->operation = val["operation"].asInt();
+    this->value = val["value"].asFloat();
 }
 
 string Effect::getFormattedStats (){
@@ -13,8 +19,12 @@ string Effect::getFormattedStats (){
     return formatted;
 }
 
-string Effect::jsonExport (){
-    string json = "{\"targetSelf\":" + to_string(this->targetSelf) + ",\"stat\":" + to_string(this->targetStat) + ",\"operation\":" + to_string(this->operation) + ",\"value\":" + to_string(this->value) + "}";
+Json::Value Effect::jsonExport (){
+    Json::Value json;
+    json["targetSelf"] = this->targetSelf;
+    json["stat"] = this->targetStat;
+    json["operation"] = this->operation;
+    json["value"] = this->value;
     return json;
 }
 

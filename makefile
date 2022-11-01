@@ -1,5 +1,7 @@
-all: main.o Effect.o EffectPackage.o
-	g++ -o file-editor build/main.o build/Effect.o build/EffectPackage.o
+JSON = -ljsoncpp
+
+all: Effect.o EffectPackage.o main.o
+	g++ -o file-editor build/main.o build/Effect.o build/EffectPackage.o ${JSON}
 
 main.o: src/Effect.hpp src/EffectPackage.hpp
 	mkdir -p build
@@ -11,4 +13,4 @@ Effect.o: src/Effect.hpp
 
 EffectPackage.o: src/EffectPackage.hpp src/IPackage.hpp
 	mkdir -p build
-	g++ -o build/EffectPackage.o -c src/EffectPackage.cpp 
+	g++ -o build/EffectPackage.o -c src/EffectPackage.cpp

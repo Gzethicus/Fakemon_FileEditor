@@ -4,6 +4,7 @@
 #include <string>
 #include <unordered_map>
 #include <vector>
+#include <jsoncpp/json/json.h>
 
 #include "Move.hpp"
 #include "Effect.hpp"
@@ -18,10 +19,12 @@ private:
 
   // Operations
 public:
+  EffectPackage ();
+  EffectPackage (string json);
   vector<string> getNames ();
   Effect get (string name);
-  /// exports the package as a JSON string
-  string jsonExport ();
+  /// exports the package as a JSON value
+  Json::Value jsonExport ();
   void addEffect (string name, Effect effect);
 };
 #endif
