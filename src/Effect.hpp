@@ -20,7 +20,7 @@ class Effect {
     Effect (Json::Value val);
     /// returns all fields of the instance in a nicely formatted string for printing to console
     string getFormattedStats ();
-    /// export the effect as a JSON string
+    /// export the effect as a JSON Value
     Json::Value jsonExport ();
 
     // Setters and Getters

@@ -22,7 +22,7 @@ public:
   EffectPackage ();
   EffectPackage (string json);
   vector<string> getNames ();
-  Effect get (string name);
+  Effect* get (string name);
   /// exports the package as a JSON value
   Json::Value jsonExport ();
   void addEffect (string name, Effect effect);

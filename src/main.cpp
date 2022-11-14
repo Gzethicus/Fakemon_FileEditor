@@ -1,4 +1,5 @@
 #include <iostream>
+#include <memory>
 #include <jsoncpp/json/json.h>
 
 #include "Effect.hpp"
@@ -8,7 +9,9 @@ using namespace std;
 
 
 int main(int argc,char* argv[]) {
-    Json::FastWriter fastWriter;
+    Json::StreamWriterBuilder builder;
+    builder["commentStyle"] = "None";
+    builder["indentation"] = "";
 
     Effect test = Effect();
     test.setTarget(true);
@@ -21,6 +24,7 @@ int main(int argc,char* argv[]) {
     test2.setTargetStat(2);
     test2.setOperator(0);
     test2.setValue(-20.f);
+
     EffectPackage testPackage = EffectPackage();
     testPackage.addEffect("AtkBuf", test);
     testPackage.addEffect("DefDebuf", test2);
@@ -29,10 +33,13 @@ int main(int argc,char* argv[]) {
     cout << test.getFormattedStats();
     cout << "test2:\n";
     cout << test2.getFormattedStats();
-    cout << fastWriter.write(test.jsonExport());
-    cout << fastWriter.write(testPackage.jsonExport());
+    cout << Json::writeString(builder, test.jsonExport()) << endl;
+    cout << Json::writeString(builder, testPackage.jsonExport()) << endl;
 
-    EffectPackage testPackage2 = EffectPackage(fastWriter.write(testPackage.jsonExport()));
+    EffectPackage testPackage2 = EffectPackage(Json::writeString(builder, testPackage.jsonExport()));
+    testPackage2.get("AtkBuf")->setOperator(0);
+    testPackage2.get("DefDebuf")->setValue(-25.f);
+    cout << Json::writeString(builder, testPackage2.jsonExport()) << endl;
 
     return 0;
 }

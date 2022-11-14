@@ -1,4 +1,5 @@
 #include "EffectPackage.hpp"
+#include <memory>
 #include <iostream>
 
 using namespace std;
@@ -6,22 +7,21 @@ using namespace std;
 EffectPackage::EffectPackage () : effects{unordered_map<string, Effect>()}{}
 
 EffectPackage::EffectPackage (string json) {
-    Json::Reader reader;
-    Json::Value val;
+    Json::CharReaderBuilder builder;
+    unique_ptr<Json::CharReader> reader = unique_ptr<Json::CharReader> (builder.newCharReader());
+    Json::Value val {};
+    string err {};
     this->effects = unordered_map<string, Effect>();
+
+    reader->parse(json.c_str(), json.c_str() + json.length(), &val, &err);
     this->effects.reserve(val.size());
-    cout << "allocated\n";
-    if (reader.parse(json, val, true))
-        cout << "parsed";
-    else 
-        cout << reader.getFormattedErrorMessages();
+
     for (Json::ValueIterator effect = val.begin(); effect != val.end(); effect++){
-        this->effects[effect.key().asString()] = Effect(val[effect.index()]);
-        cout << effect.name();
+        this->effects[effect.name()] = Effect(val[effect.name()]);
     }
 }
 
-vector<string> EffectPackage::getNames (){
+vector<string> EffectPackage::getNames () {
     vector<string> keys;
     keys.reserve(this->effects.size());
 
@@ -31,8 +31,8 @@ vector<string> EffectPackage::getNames (){
     return keys;
 }
 
-Effect EffectPackage::get (string name){
-    return this->effects[name];
+Effect* EffectPackage::get (string name){
+    return &(this->effects[name]);
 }
 
 Json::Value EffectPackage::jsonExport (){
