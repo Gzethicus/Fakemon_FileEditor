@@ -29,7 +29,7 @@ Json::Value Effect::jsonExport (){
 }
 
 #pragma region getset
-string Effect::getStringOperator (){
+inline string Effect::getStringOperator (){
     switch (this->operation){
         case 0:
             return "Add";
@@ -40,16 +40,11 @@ string Effect::getStringOperator (){
     }
 }
 
-string Effect::getStringTarget (){
-    switch (this->targetSelf){
-        case true:
-            return "Self";
-        case false:
-            return "Opponent";
-    }
+inline string Effect::getStringTarget (){
+    return this->targetSelf ? "Self" : "Opponent";
 }
 
-string Effect::getStringStat (){
+inline string Effect::getStringStat (){
     switch (this->targetStat){
         case 0:
             return "HP";

@@ -1,6 +1,5 @@
 #include "EffectPackage.hpp"
 #include <memory>
-#include <iostream>
 
 using namespace std;
 

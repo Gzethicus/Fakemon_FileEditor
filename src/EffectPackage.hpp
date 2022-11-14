@@ -6,7 +6,6 @@
 #include <vector>
 #include <jsoncpp/json/json.h>
 
-#include "Move.hpp"
 #include "Effect.hpp"
 #include "IPackage.hpp"
 

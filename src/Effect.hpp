@@ -30,8 +30,8 @@ class Effect {
     void setTargetStat (int stat);
 
   private:
-    string getStringOperator ();
-    string getStringTarget ();
-    string getStringStat ();
+    inline string getStringOperator ();
+    inline string getStringTarget ();
+    inline string getStringStat ();
 };
 #endif
