@@ -2,23 +2,26 @@ JSON = -ljsoncpp
 BEFFECTS = build/Effect.o build/EffectPackage.o
 BMOVES = build/Move.o build/MovePackage.o
 BTRIGGERS = build/Trigger.o build/TriggerPackage.o
+BITEM = build/Item.o build/ItemPackage.o
 BMAIN = -o file-editor build/main.o
 
 HEFFECTS = src/Effect.hpp src/EffectPackage.hpp
 HMOVES = src/Move.hpp src/MovePackage.hpp
 HTRIGGERS = src/Trigger.hpp src/TriggerPackage.hpp
+HITEM = src/Item.hpp src/ItemPackage.hpp
 
 OEFFECTS = Effect.o EffectPackage.o
 OMOVES = Move.o MovePackage.o
 OTRIGGERS = Trigger.o TriggerPackage.o
+OITEM = Item.o ItemPackage.o
 
 BUILD = -o build/main.o -c src/main
 B = mkdir -p build
 
-all: ${OEFFECTS} ${OMOVES} main.o
-	g++ ${BMAIN} ${BEFFECTS} ${BMOVES} ${JSON}
+all: ${OEFFECTS} ${OMOVES} ${OTRIGGERS} ${OITEM} main.o
+	g++ ${BMAIN} ${BEFFECTS} ${BMOVES} ${BTRIGGERS} ${BITEM} ${JSON}
 
-main.o: ${HEFFECTS} ${HMOVES}
+main.o: ${HEFFECTS} ${HMOVES} ${HTRIGGERS} ${HITEM}
 	${B}
 	g++ ${BUILD}.cpp
 
@@ -69,3 +72,19 @@ Trigger.o: src/Trigger.hpp
 TriggerPackage.o: src/TriggerPackage.hpp src/IPackage.hpp
 	${B}
 	g++ -o build/TriggerPackage.o -c src/TriggerPackage.cpp
+
+
+Items: ${OITEM} main_Item.o
+	g++ ${BMAIN} ${BITEM} ${JSON}
+
+main_Item.o: ${HITEM}
+	${B}
+	g++ ${BUILD}_Item.cpp
+
+Item.o: src/Item.hpp
+	${B}
+	g++ -o build/Item.o -c src/Item.cpp
+
+ItemPackage.o: src/ItemPackage.hpp src/IPackage.hpp
+	${B}
+	g++ -o build/ItemPackage.o -c src/ItemPackage.cpp
