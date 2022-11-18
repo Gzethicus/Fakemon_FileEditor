@@ -4,32 +4,29 @@
 #include <string>
 #include <unordered_map>
 #include <vector>
-
-namespace client {
-  class Move;
-}
+#include <jsoncpp/json/json.h>
 
 #include "Move.hpp"
+#include "IPackage.hpp"
 
-namespace client {
+using namespace std;
 
-  /// class MovePackage - 
-  class MovePackage {
-    // Attributes
-  private:
-    std::unordered_map<std::string, Move> attacks;
-    std::vector<std::string> typeDependencies;
-    std::vector<std::string> spriteDependencies;
-    std::vector<std::string> effectDependencies;
-    // Operations
-  public:
-    std::vector<std::string> getNames ();
-    Move get (std::string name);
-    /// exports the package as a JSON string
-    /// @param 		(???) 
-    std::string jsonExport ( );
-    void addMove (std::string name, Move move);
-    // Setters and Getters
-  };
+class MovePackage : public IPackage{
+  // Attributes
+private:
+  unordered_map<std::string, Move> moves;
+  vector<string> typeDependencies;
+  vector<string> spriteDependencies;
+  vector<string> effectDependencies;
+  // Operations
+public:
+MovePackage();
+MovePackage(string json);
+  vector<string> getNames ();
+  Move* get (string name);
+  /// exports the package as a JSON Value
+  Json::Value jsonExport ( );
+  void addMove (std::string name, Move move);
+  // Setters and Getters
 };
 #endif

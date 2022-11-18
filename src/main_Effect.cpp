@@ -29,10 +29,8 @@ int main(int argc,char* argv[]) {
     testPackage.addEffect("AtkBuf", test);
     testPackage.addEffect("DefDebuf", test2);
 
-    cout << "test:\n";
-    cout << test.getFormattedStats();
-    cout << "test2:\n";
-    cout << test2.getFormattedStats();
+    cout << "test:\n" << test.getFormattedStats();
+    cout << "test2:\n" << test2.getFormattedStats();
     cout << Json::writeString(builder, test.jsonExport()) << endl;
     cout << Json::writeString(builder, testPackage.jsonExport()) << endl;
 
