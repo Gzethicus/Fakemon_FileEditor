@@ -3,25 +3,28 @@ BEFFECTS = build/Effect.o build/EffectPackage.o
 BMOVES = build/Move.o build/MovePackage.o
 BTRIGGERS = build/Trigger.o build/TriggerPackage.o
 BITEM = build/Item.o build/ItemPackage.o
+BTYPE = build/Type.o build/TypePackage.o
 BMAIN = -o file-editor build/main.o
 
 HEFFECTS = src/Effect.hpp src/EffectPackage.hpp
 HMOVES = src/Move.hpp src/MovePackage.hpp
 HTRIGGERS = src/Trigger.hpp src/TriggerPackage.hpp
 HITEM = src/Item.hpp src/ItemPackage.hpp
+HTYPE = src/Type.hpp src/TypePackage.hpp
 
 OEFFECTS = Effect.o EffectPackage.o
 OMOVES = Move.o MovePackage.o
 OTRIGGERS = Trigger.o TriggerPackage.o
 OITEM = Item.o ItemPackage.o
+OTYPE = Type.o TypePackage.o
 
 BUILD = -o build/main.o -c src/main
 B = mkdir -p build
 
-all: ${OEFFECTS} ${OMOVES} ${OTRIGGERS} ${OITEM} main.o
-	g++ ${BMAIN} ${BEFFECTS} ${BMOVES} ${BTRIGGERS} ${BITEM} ${JSON}
+all: ${OEFFECTS} ${OMOVES} ${OTRIGGERS} ${OITEM} ${OTYPE} main.o
+	g++ ${BMAIN} ${BEFFECTS} ${BMOVES} ${BTRIGGERS} ${BITEM} ${BTYPE} ${JSON}
 
-main.o: ${HEFFECTS} ${HMOVES} ${HTRIGGERS} ${HITEM}
+main.o: ${HEFFECTS} ${HMOVES} ${HTRIGGERS} ${HITEM} ${HTYPE}
 	${B}
 	g++ ${BUILD}.cpp
 
@@ -88,3 +91,19 @@ Item.o: src/Item.hpp
 ItemPackage.o: src/ItemPackage.hpp src/IPackage.hpp
 	${B}
 	g++ -o build/ItemPackage.o -c src/ItemPackage.cpp
+
+
+Types: ${OTYPE} main_Type.o
+	g++ ${BMAIN} ${BTYPE} ${JSON}
+
+main_Type.o: ${HTYPE}
+	${B}
+	g++ ${BUILD}_Type.cpp
+
+Type.o: src/Type.hpp
+	${B}
+	g++ -o build/Type.o -c src/Type.cpp
+
+TypePackage.o: src/TypePackage.hpp src/IPackage.hpp
+	${B}
+	g++ -o build/TypePackage.o -c src/TypePackage.cpp
