@@ -17,6 +17,7 @@ HITEM = src/Item.hpp src/ItemPackage.hpp
 HTYPE = src/Type.hpp src/TypePackage.hpp
 HCREATURE = src/Creature.hpp src/CreaturePackage.hpp
 
+OEXPLORER = PackageExplorer.o 
 OEFFECTS = Effect.o EffectPackage.o
 OMOVES = Move.o MovePackage.o
 OTRIGGERS = Trigger.o TriggerPackage.o
@@ -24,12 +25,16 @@ OITEM = Item.o ItemPackage.o
 OTYPE = Type.o TypePackage.o
 OCREATURE = Creature.o CreaturePackage.o
 
-all: ${OEFFECTS} ${OMOVES} ${OTRIGGERS} ${OITEM} ${OTYPE} ${OCREATURE}main.o
-	g++ ${BMAIN} ${BEFFECTS} ${BMOVES} ${BTRIGGERS} ${BITEM} ${BTYPE} ${BCREATURE} ${JSON}
+all: PackageExplorer.o ${OEFFECTS} ${OMOVES} ${OTRIGGERS} ${OITEM} ${OTYPE} ${OCREATURE} main.o
+	g++ ${BMAIN} build/PackageExplorer.o ${BEFFECTS} ${BMOVES} ${BTRIGGERS} ${BITEM} ${BTYPE} ${BCREATURE} ${JSON}
 
-main.o: ${HEFFECTS} ${HMOVES} ${HTRIGGERS} ${HITEM} ${HTYPE} ${HCREATURE}
+main.o: src/PackageExplorer.hpp ${HEFFECTS} ${HMOVES} ${HTRIGGERS} ${HITEM} ${HTYPE} ${HCREATURE}
 	$B
 	g++ ${BUILD}.cpp
+
+PackageExplorer.o: src/PackageExplorer.hpp
+	$B
+	g++ -o build/PackageExplorer.o -c src/PackageExplorer.cpp
 
 
 Effects: ${OEFFECTS} main_Effect.o

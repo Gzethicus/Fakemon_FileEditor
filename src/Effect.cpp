@@ -1,3 +1,4 @@
+#include <iostream>
 #include "Effect.hpp"
 
 using namespace std;
@@ -57,6 +58,28 @@ inline string Effect::getStringStat (){
         default:
             return "Undefined";
     }
+}
+
+void Effect::display(int indexes[2]){
+    cout << "\t";
+    if (indexes[0] == 0)
+        cout << ">";
+    cout << "target :\t" + this->getStringTarget() + "\n";
+
+    cout << "\t";
+    if (indexes[0] == 1)
+        cout << ">";
+    cout << "stat :\t\t" + this->getStringStat() + "\n";
+
+    cout << "\t";
+    if (indexes[0] == 2)
+        cout << ">";
+    cout << "operation :\t" + this->getStringOperator() + "\n";
+
+    cout << "\t";
+    if (indexes[0] == 3)
+        cout << ">";
+    cout << "value :\t\t" + to_string(this->value) + "\n";
 }
 
 void Effect::setTarget (bool self){

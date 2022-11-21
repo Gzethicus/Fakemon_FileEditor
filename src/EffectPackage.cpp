@@ -1,5 +1,6 @@
-#include "EffectPackage.hpp"
+#include <iostream>
 #include <memory>
+#include "EffectPackage.hpp"
 
 using namespace std;
 
@@ -17,17 +18,12 @@ EffectPackage::EffectPackage (string json) {
 
     for (Json::ValueIterator effect = val.begin(); effect != val.end(); effect++){
         this->effects[effect.name()] = Effect(val[effect.name()]);
+        this->order.push_back(effect.name());
     }
 }
 
 vector<string> EffectPackage::getNames () {
-    vector<string> keys;
-    keys.reserve(this->effects.size());
-
-    for(auto key : this->effects)
-        keys.push_back(key.first);
-    
-    return keys;
+    return this->order;
 }
 
 Effect* EffectPackage::get (string name){
@@ -45,4 +41,16 @@ Json::Value EffectPackage::jsonExport (){
 
 void EffectPackage::addEffect (string name, Effect effect){
     this->effects[name] = effect;
+    this->order.push_back(name);
+}
+
+void EffectPackage::display (int indexes[3]) {
+    int subindexes[2] = {indexes[1], indexes[2]};
+    for (int i = 0; i < this->effects.size(); i++) {
+        if (i == indexes[0]) {
+            cout << ">" << this->order[i] << endl;
+            this->effects[order[i]].display(subindexes);
+        } else
+            cout << this->order[i] << endl;
+    }
 }

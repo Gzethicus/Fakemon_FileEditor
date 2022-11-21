@@ -3,6 +3,7 @@
 
 #include <string>
 #include <unordered_map>
+#include <map>
 #include <vector>
 #include <jsoncpp/json/json.h>
 
@@ -15,6 +16,7 @@ class EffectPackage : public IPackage{
   // Attributes
 private:
   unordered_map<string, Effect> effects;
+  vector<string> order;
 
   // Operations
 public:
@@ -25,5 +27,6 @@ public:
   /// exports the package as a JSON value
   Json::Value jsonExport ();
   void addEffect (string name, Effect effect);
+  void display (int indexes[3]);
 };
 #endif

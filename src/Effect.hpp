@@ -22,6 +22,7 @@ class Effect {
     string getFormattedStats ();
     /// export the effect as a JSON Value
     Json::Value jsonExport ();
+    void display(int indexes[2]);
 
     // Setters and Getters
     void setOperator (int operation);

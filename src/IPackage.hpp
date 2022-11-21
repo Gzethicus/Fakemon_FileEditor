@@ -10,5 +10,6 @@ class IPackage{
     public:
         virtual vector<string> getNames() = 0;
         virtual Json::Value jsonExport() = 0;
+        virtual void display(int indexes[3]) = 0;
 };
 #endif
