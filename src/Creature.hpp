@@ -29,7 +29,7 @@ class Creature : public IPackageElement {
     /** Sets an instance field.
         @param index The index of the field to edit.
         @param value A string representation of the new value.*/
-    void setField(int index, string value);
+    void setField(int indexes[2], string value);
 
     // Setters and Getters
     void setStat (int stat, int value);

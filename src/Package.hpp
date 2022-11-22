@@ -40,7 +40,8 @@ public:
     2 - Item ||
     3 - Move ||
     4 - Trigger ||
-    5 - Type*/
+    5 - Type
+    @param json A json representation of the package to build.*/
   Package (int type, string json);
   vector<string> getNames ();
   IPackageElement* get (string name);

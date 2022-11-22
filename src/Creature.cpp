@@ -63,8 +63,18 @@ void Creature::display(int indexes[2]){
     cout << "type :\t" << (this->type.empty() ? "undefined !" : this->type) << endl;
 }
 
-void Creature::setField(int index, string value){
-    
+void Creature::setField(int indexes[2], string value){
+    switch (indexes[0]){
+        case 0:
+            this->stats[indexes[1]] = stoi(value);
+            break;
+        case 1:
+            this->moves[indexes[1]] = value;
+            break;
+        case 2:
+            this->type = value;
+            break;
+    }
 }
 
 void Creature::displayStats(int index[1]){

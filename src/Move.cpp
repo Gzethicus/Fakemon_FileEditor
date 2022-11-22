@@ -66,8 +66,27 @@ void Move::display(int indexes[2]){
     cout << "sprite :\t" << (this->sprite.empty() ? "none" : this->sprite) << endl;
 }
 
-void Move::setField(int index, string value){
-    
+void Move::setField(int indexes[2], string value){
+    switch (indexes[0]){
+        case 0:
+            this->power = stoi(value);
+            break;
+        case 1:
+            this->type = value;
+            break;
+        case 2:
+            this->max = stoi(value);
+            break;
+        case 3:
+            this->priority = !value.empty();
+            break;
+        case 4:
+            this->effect = value;
+            break;
+        case 5:
+            this->sprite = value;
+            break;
+    }
 }
 
 void Move::setPower (int power){

@@ -34,8 +34,15 @@ void Item::display (int indexes[2]){
     cout << "effect :\t" << (this->effect.empty() ? "undefined !" : this->effect) << endl;
 }
 
-void Item::setField(int index, string value){
-    
+void Item::setField(int indexes[2], string value){
+    switch (indexes[0]){
+        case 0:
+            this->trigger = value;
+            break;
+        case 1:
+            this->effect = value;
+            break;
+    }
 }
 
 #pragma region getset

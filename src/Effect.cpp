@@ -82,8 +82,8 @@ inline string Effect::getStringStat (){
     }
 }
 
-void Effect::setField(int index, string value){
-    switch (index){
+void Effect::setField(int indexes[2], string value){
+    switch (indexes[0]){
         case 0:
             this->targetSelf = !value.empty();
             break;

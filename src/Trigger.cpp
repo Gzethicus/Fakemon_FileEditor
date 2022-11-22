@@ -34,8 +34,15 @@ void Trigger::display(int indexes[2]){
     cout << "threshold :\t" << to_string(this->threshold) << endl;
 }
 
-void Trigger::setField(int index, string value){
-    
+void Trigger::setField(int indexes[2], string value){
+    switch (indexes[0]){
+        case 0:
+            this->stat = stoi(value);
+            break;
+        case 1:
+            this->threshold = stoi(value);
+            break;
+    }
 }
 
 #pragma region getset

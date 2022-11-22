@@ -18,21 +18,21 @@ class Type : public IPackageElement {
   public:
     Type ();
     Type (Json::Value val);
-    /// returns all fields of the instance in a nicely formatted string for printing to console
+    // returns all fields of the instance in a nicely formatted string for printing to console
     string getFormattedStats ();
 
-    // Returns the type as a json value.
-    // @return A Json::Value representation of this instance.
+    /** Returns the type as a json value.
+        @return A Json::Value representation of this instance.*/
     Json::Value jsonExport();
 
-    // Displays the type to the console in a human-readable way.
-    // @param indexes The selected path.
+    /** Displays the type to the console in a human-readable way.
+        @param indexes The selected path.*/
     void display(int indexes[2]);
 
     /** Sets an instance field.
         @param index The index of the field to edit.
         @param value A string representation of the new value.*/
-    void setField(int index, string value);
+    void setField(int indexes[2], string value);
 
     // Setters and Getters
     void setFactor (string type, float factor);

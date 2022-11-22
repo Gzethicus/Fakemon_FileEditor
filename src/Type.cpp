@@ -50,7 +50,7 @@ void Type::display(int indexes[2]){
     }
 }
 
-void Type::setField(int index, string value){
+void Type::setField(int indexes[2], string value){
     
 }
 
