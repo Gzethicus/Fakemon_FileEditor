@@ -1,5 +1,4 @@
 #include "Creature.hpp"
-#include <iostream>
 
 using namespace std;
 
@@ -30,16 +29,73 @@ string Creature::getFormattedStats (){
 
 Json::Value Creature::jsonExport (){
     Json::Value json;
+
     Json::Value stats;
     for (int i = 0; i < 4; i++)
         stats.append(this->stats[i]);
     json["stats"] = stats;
+
     Json::Value moves;
     for (int i = 0; i < NMOVES; i++)
         moves.append(this->moves[i]);
     json["moves"] = moves;
+
     json["type"] = this->type;
     return json;
+}
+
+void Creature::display(int indexes[2]){
+    cout << "\t";
+    if (indexes[0] == 0)
+        cout << ">";
+    cout << "stat :\n";
+    this->displayStats(indexes[0] == 0 ? &(indexes[1]) : (int*) -1);
+
+    cout << "\t";
+    if (indexes[0] == 1)
+        cout << ">";
+    cout << "moves :\n";
+    this->displayMoves(indexes[0] == 1 ? &(indexes[1]) : (int*) -1);
+
+    cout << "\t";
+    if (indexes[0] == 2)
+        cout << ">";
+    cout << "type :\t" << (this->type.empty() ? "undefined !" : this->type) << endl;
+}
+
+void Creature::setField(int index, string value){
+    
+}
+
+void Creature::displayStats(int index[1]){
+    cout << "\t\t";
+    if (index[0] == 0)
+        cout << ">";
+    cout << "HP :\t" << to_string(this->stats[0]) << endl;
+
+    cout << "\t\t";
+    if (index[0] == 1)
+        cout << ">";
+    cout << "ATK :\t" << to_string(this->stats[1]) << endl;
+
+    cout << "\t\t";
+    if (index[0] == 2)
+        cout << ">";
+    cout << "DEF :\t" << to_string(this->stats[2]) << endl;
+
+    cout << "\t\t";
+    if (index[0] == 3)
+        cout << ">";
+    cout << "SPD :\t" << to_string(this->stats[3]) << endl;
+}
+
+void Creature::displayMoves(int index[1]){
+    for (int i = 0; i < NMOVES; i++){
+        cout << "\t\t";
+        if (i == index[0])
+            cout << ">";
+        cout << (this->moves[i].empty() ? "undefined !" : this->moves[i]) << endl;
+    }
 }
 
 #pragma region getset

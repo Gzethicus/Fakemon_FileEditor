@@ -1,76 +1,72 @@
 JSON = -ljsoncpp
 BMAIN = -o file-editor build/main.o
 BUILD = -o build/main.o -c src/main
+BUILCOMP = g++ ${BMAIN} ${BELEMENTS} ${BPACKAGE} ${JSON}
 B = mkdir -p build
 
-BEFFECTS = build/Effect.o build/EffectPackage.o
-BMOVES = build/Move.o build/MovePackage.o
-BTRIGGERS = build/Trigger.o build/TriggerPackage.o
-BITEM = build/Item.o build/ItemPackage.o
-BTYPE = build/Type.o build/TypePackage.o
-BCREATURE = build/Creature.o build/CreaturePackage.o
+BPACKAGE = build/Package.o
+BEXPLORER = build/PackageExplorer.o
+BEF = build/Effect.o
+BMO = build/Move.o
+BTR = build/Trigger.o
+BIT = build/Item.o
+BTY = build/Type.o
+BCR = build/Creature.o
+BELEMENTS = ${BEF} ${BMO} ${BTR} ${BIT} ${BTY} ${BCR}
 
-HEFFECTS = src/Effect.hpp src/EffectPackage.hpp
-HMOVES = src/Move.hpp src/MovePackage.hpp
-HTRIGGERS = src/Trigger.hpp src/TriggerPackage.hpp
-HITEM = src/Item.hpp src/ItemPackage.hpp
-HTYPE = src/Type.hpp src/TypePackage.hpp
-HCREATURE = src/Creature.hpp src/CreaturePackage.hpp
+OELEMENTS = Effect.o Move.o Trigger.o Item.o Type.o Creature.o
 
-OEXPLORER = PackageExplorer.o 
-OEFFECTS = Effect.o EffectPackage.o
-OMOVES = Move.o MovePackage.o
-OTRIGGERS = Trigger.o TriggerPackage.o
-OITEM = Item.o ItemPackage.o
-OTYPE = Type.o TypePackage.o
-OCREATURE = Creature.o CreaturePackage.o
+HPA = src/Package.hpp
+HEF = src/Effect.hpp
+HMO = src/Move.hpp
+HTR = src/Trigger.hpp
+HIT = src/Item.hpp
+HTY = src/Type.hpp
+HCR = src/Creature.hpp
+HELEMENTS = ${HEF} ${HMO} ${HTR} ${HIT} ${HTY} ${HCR}
 
-all: PackageExplorer.o ${OEFFECTS} ${OMOVES} ${OTRIGGERS} ${OITEM} ${OTYPE} ${OCREATURE} main.o
-	g++ ${BMAIN} build/PackageExplorer.o ${BEFFECTS} ${BMOVES} ${BTRIGGERS} ${BITEM} ${BTYPE} ${BCREATURE} ${JSON}
+all: Package.o PackageExplorer.o ${OELEMENTS} main.o
+	g++ ${BMAIN} ${BPACKAGE} ${BEXPLORER} ${BELEMENTS} ${JSON}
 
-main.o: src/PackageExplorer.hpp ${HEFFECTS} ${HMOVES} ${HTRIGGERS} ${HITEM} ${HTYPE} ${HCREATURE}
+main.o: src/PackageExplorer.hpp ${HELEMENTS}
 	$B
 	g++ ${BUILD}.cpp
 
 PackageExplorer.o: src/PackageExplorer.hpp
 	$B
-	g++ -o build/PackageExplorer.o -c src/PackageExplorer.cpp
+	g++ -o ${BEXPLORER} -c src/PackageExplorer.cpp
+
+Package.o: ${OELEMENTS} ${HELEMENTS} ${HPA}
+	$B
+	g++ -o ${BPACKAGE} -c src/Package.cpp
 
 
-Effects: ${OEFFECTS} main_Effect.o
-	g++ ${BMAIN} ${BEFFECTS} ${JSON}
+Effects: Effect.o main_Effect.o Package.o
+	${BUILCOMP}
 
-main_Effect.o: ${HEFFECTS}
+main_Effect.o:
 	$B
 	g++ ${BUILD}_Effect.cpp
 
-Effect.o: src/Effect.hpp
+Effect.o: ${HEF}
 	$B
-	g++ -o build/Effect.o -c src/Effect.cpp
-
-EffectPackage.o: src/EffectPackage.hpp src/IPackage.hpp
-	$B
-	g++ -o build/EffectPackage.o -c src/EffectPackage.cpp
+	g++ -o ${BEF} -c src/Effect.cpp
 
 
-Moves: ${OMOVES} main_Move.o
-	g++ ${BMAIN} ${BMOVES} ${JSON}
+Moves: Move.o main_Move.o Package.o
+	${BUILCOMP}
 
-main_Move.o: ${HMOVES}
+main_Move.o:
 	$B
 	g++ ${BUILD}_Move.cpp
 
-Move.o: src/Move.hpp
+Move.o: ${HMO}
 	$B
-	g++ -o build/Move.o -c src/Move.cpp
-
-MovePackage.o: src/MovePackage.hpp src/IPackage.hpp
-	$B
-	g++ -o build/MovePackage.o -c src/MovePackage.cpp
+	g++ -o ${BMO} -c src/Move.cpp
 
 
-Triggers: ${OTRIGGERS} main_Trigger.o
-	g++ ${BMAIN} ${BTRIGGERS} ${JSON}
+Triggers: Trigger.o main_Trigger.o Package.o
+	${BUILCOMP}
 
 main_Trigger.o: ${HTRIGGERS}
 	$B
@@ -78,15 +74,11 @@ main_Trigger.o: ${HTRIGGERS}
 
 Trigger.o: src/Trigger.hpp
 	$B
-	g++ -o build/Trigger.o -c src/Trigger.cpp
-
-TriggerPackage.o: src/TriggerPackage.hpp src/IPackage.hpp
-	$B
-	g++ -o build/TriggerPackage.o -c src/TriggerPackage.cpp
+	g++ -o ${BTR} -c src/Trigger.cpp
 
 
-Items: ${OITEM} main_Item.o
-	g++ ${BMAIN} ${BITEM} ${JSON}
+Items: Item.o main_Item.o Package.o
+	${BUILCOMP}
 
 main_Item.o: ${HITEM}
 	$B
@@ -94,15 +86,11 @@ main_Item.o: ${HITEM}
 
 Item.o: src/Item.hpp
 	$B
-	g++ -o build/Item.o -c src/Item.cpp
-
-ItemPackage.o: src/ItemPackage.hpp src/IPackage.hpp
-	$B
-	g++ -o build/ItemPackage.o -c src/ItemPackage.cpp
+	g++ -o ${BIT} -c src/Item.cpp
 
 
-Types: ${OTYPE} main_Type.o
-	g++ ${BMAIN} ${BTYPE} ${JSON}
+Types: Type.o main_Type.o Package.o
+	${BUILCOMP}
 
 main_Type.o: ${HTYPE}
 	$B
@@ -110,15 +98,11 @@ main_Type.o: ${HTYPE}
 
 Type.o: src/Type.hpp
 	$B
-	g++ -o build/Type.o -c src/Type.cpp
-
-TypePackage.o: src/TypePackage.hpp src/IPackage.hpp
-	$B
-	g++ -o build/TypePackage.o -c src/TypePackage.cpp
+	g++ -o ${BTY} -c src/Type.cpp
 
 
-Creatures: ${OCREATURE} main_Creature.o
-	g++ ${BMAIN} ${BCREATURE} ${JSON}
+Creatures: Creature.o main_Creature.o Package.o
+	${BUILCOMP}
 
 main_Creature.o: ${HCREATURE}
 	$B
@@ -126,8 +110,4 @@ main_Creature.o: ${HCREATURE}
 
 Creature.o: src/Creature.hpp
 	$B
-	g++ -o build/Creature.o -c src/Creature.cpp
-
-CreaturePackage.o: src/CreaturePackage.hpp src/IPackage.hpp
-	$B
-	g++ -o build/CreaturePackage.o -c src/CreaturePackage.cpp
+	g++ -o ${BCR} -c src/Creature.cpp

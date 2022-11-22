@@ -6,14 +6,14 @@
 #include <vector>
 #include <jsoncpp/json/json.h>
 
-#include "IPackage.hpp"
+#include "Package.hpp"
 
 using namespace std;
 
 class PackageExplorer {
     //Attributes
 private:
-    IPackage* package;
+    Package* package;
     int index[3];
     int depth;
 

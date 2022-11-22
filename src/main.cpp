@@ -3,17 +3,12 @@
 #include <jsoncpp/json/json.h>
 
 #include "Effect.hpp"
-#include "EffectPackage.hpp"
 #include "Move.hpp"
-#include "MovePackage.hpp"
 #include "Trigger.hpp"
-#include "TriggerPackage.hpp"
 #include "Item.hpp"
-#include "ItemPackage.hpp"
 #include "Type.hpp"
-#include "TypePackage.hpp"
 #include "Creature.hpp"
-#include "CreaturePackage.hpp"
+#include "Package.hpp"
 #include "PackageExplorer.hpp"
 
 int main(int argc,char* argv[]) {

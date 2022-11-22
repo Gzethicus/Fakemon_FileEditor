@@ -34,6 +34,42 @@ Json::Value Move::jsonExport ( ){
     return json;
 }
 
+void Move::display(int indexes[2]){
+    cout << "\t";
+    if (indexes[0] == 0)
+        cout << ">";
+    cout << "power :\t\t" << to_string(this->power) << endl;
+
+    cout << "\t";
+    if (indexes[0] == 1)
+        cout << ">";
+    cout << "type :\t\t" << (this->type.empty() ? "neutral" : this->type) << endl;
+
+    cout << "\t";
+    if (indexes[0] == 2)
+        cout << ">";
+    cout << "max :\t\t" << to_string(this->max) << endl;
+
+    cout << "\t";
+    if (indexes[0] == 3)
+        cout << ">";
+    cout << "hasPriority :\t" << to_string(this->priority) << endl;
+
+    cout << "\t";
+    if (indexes[0] == 4)
+        cout << ">";
+    cout << "effect :\t" << (this->effect.empty() ? "none" : this->effect) << endl;
+
+    cout << "\t";
+    if (indexes[0] == 5)
+        cout << ">";
+    cout << "sprite :\t" << (this->sprite.empty() ? "none" : this->sprite) << endl;
+}
+
+void Move::setField(int index, string value){
+    
+}
+
 void Move::setPower (int power){
     this->power = power;
 }

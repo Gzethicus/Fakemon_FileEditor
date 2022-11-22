@@ -3,8 +3,9 @@
 
 #include <string>
 #include <jsoncpp/json/json.h>
+#include "IPackageElement.hpp"
 
-class Move {
+class Move : public IPackageElement {
   // Attributes
 private:
   int power;
@@ -22,8 +23,20 @@ public:
   Move (Json::Value val);
   /// returns all fields of the instance in a nicely formatted string for printing to console
   std::string getFormattedStats ();
-  /// exports the move as a JSON string
-  Json::Value jsonExport ( );
+
+  // Returns the move as a json value.
+  // @return A Json::Value representation of this instance.
+  Json::Value jsonExport();
+
+  // Displays the move to the console in a human-readable way.
+  // @param indexes The selected path.
+  void display(int indexes[2]);
+
+    /** Sets an instance field.
+        @param index The index of the field to edit.
+        @param value A string representation of the new value.*/
+    void setField(int index, string value);
+
   // Setters and Getters
   void setPower (int power);
   void setType (std::string type);

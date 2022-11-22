@@ -24,7 +24,7 @@ string Type::getFormattedStats (){
     for (auto key : this->factors) {
         type = key.first;
         indent = 2 - ((type.length() + 2) /8);  //compute the number of remaining indents to reach a 3 * 8 indent, accounting for " :" (2 chars)
-        formatted += "\t" + type + string(indent, '\t') + to_string(key.second) + "\n";
+        formatted += "\t" + type + " :" + string(indent, '\t') + to_string(key.second) + "\n";
     }
     return formatted;
 }
@@ -34,6 +34,24 @@ Json::Value Type::jsonExport (){
     for (auto key : this->factors)
         json[key.first] = key.second;
     return json;
+}
+
+void Type::display(int indexes[2]){
+    int i = 0;
+    int indent;
+    string type;
+    for (pair<string,float> key: this->factors){
+        type = key.first;
+        indent = 2 - ((type.length() + 2) /8);  //compute the number of remaining indents to reach a 3 * 8 indent, accounting for " :" (2 chars)
+        cout << "\t";
+        if (indexes[0] == i++)
+            cout << ">";
+        cout << type << " :" << string(indent, '\t') << to_string(key.second) << endl;
+    }
+}
+
+void Type::setField(int index, string value){
+    
 }
 
 #pragma region getset

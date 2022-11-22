@@ -22,6 +22,22 @@ Json::Value Trigger::jsonExport (){
     return json;
 }
 
+void Trigger::display(int indexes[2]){
+    cout << "\t";
+    if (indexes[0] == 0)
+        cout << ">";
+    cout << "stat :\t\t" << this->getStringStat() << endl;
+
+    cout << "\t";
+    if (indexes[0] == 1)
+        cout << ">";
+    cout << "threshold :\t" << to_string(this->threshold) << endl;
+}
+
+void Trigger::setField(int index, string value){
+    
+}
+
 #pragma region getset
 inline string Trigger::getStringStat (){
     switch (this->stat){

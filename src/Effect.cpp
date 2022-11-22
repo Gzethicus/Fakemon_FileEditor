@@ -29,6 +29,28 @@ Json::Value Effect::jsonExport (){
     return json;
 }
 
+void Effect::display(int indexes[2]){
+    cout << "\t";
+    if (indexes[0] == 0)
+        cout << ">";
+    cout << "target :\t" << this->getStringTarget() << "\n";
+
+    cout << "\t";
+    if (indexes[0] == 1)
+        cout << ">";
+    cout << "stat :\t\t" << this->getStringStat() << "\n";
+
+    cout << "\t";
+    if (indexes[0] == 2)
+        cout << ">";
+    cout << "operation :\t" << this->getStringOperator() << "\n";
+
+    cout << "\t";
+    if (indexes[0] == 3)
+        cout << ">";
+    cout << "value :\t\t" << to_string(this->value) << "\n";
+}
+
 #pragma region getset
 inline string Effect::getStringOperator (){
     switch (this->operation){
@@ -60,26 +82,21 @@ inline string Effect::getStringStat (){
     }
 }
 
-void Effect::display(int indexes[2]){
-    cout << "\t";
-    if (indexes[0] == 0)
-        cout << ">";
-    cout << "target :\t" + this->getStringTarget() + "\n";
-
-    cout << "\t";
-    if (indexes[0] == 1)
-        cout << ">";
-    cout << "stat :\t\t" + this->getStringStat() + "\n";
-
-    cout << "\t";
-    if (indexes[0] == 2)
-        cout << ">";
-    cout << "operation :\t" + this->getStringOperator() + "\n";
-
-    cout << "\t";
-    if (indexes[0] == 3)
-        cout << ">";
-    cout << "value :\t\t" + to_string(this->value) + "\n";
+void Effect::setField(int index, string value){
+    switch (index){
+        case 0:
+            this->targetSelf = !value.empty();
+            break;
+        case 1:
+            this->targetStat = stoi(value);
+            break;
+        case 2:
+            this->operation = stoi(value);
+            break;
+        case 3:
+            this->value = stof(value);
+            break;
+    }
 }
 
 void Effect::setTarget (bool self){

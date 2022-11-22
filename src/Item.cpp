@@ -22,6 +22,22 @@ Json::Value Item::jsonExport (){
     return json;
 }
 
+void Item::display (int indexes[2]){
+    cout << "\t";
+    if (indexes[0] == 0)
+        cout << ">";
+    cout << "trigger :\t" << (this->trigger.empty() ? "undefined !" : this->trigger) << endl;
+
+    cout << "\t";
+    if (indexes[0] == 1)
+        cout << ">";
+    cout << "effect :\t" << (this->effect.empty() ? "undefined !" : this->effect) << endl;
+}
+
+void Item::setField(int index, string value){
+    
+}
+
 #pragma region getset
 void Item::setTrigger (string trigger){
     this->trigger = trigger;

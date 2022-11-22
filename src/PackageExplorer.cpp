@@ -2,35 +2,31 @@
 #include <fstream>
 #include <iostream>
 #include "PackageExplorer.hpp"
-#include "CreaturePackage.hpp"
-#include "EffectPackage.hpp"
-#include "ItemPackage.hpp"
-#include "MovePackage.hpp"
-#include "TriggerPackage.hpp"
-#include "TypePackage.hpp"
+#include "Package.hpp"
 
 using namespace std;
 
 PackageExplorer::PackageExplorer(string fileName): index{0, -1, -1}, depth{0} {
     fstream file;
     file.open(fileName, fstream::in);
-    string type;
+    string sType;
+    int type = -1;
     string json;
-    getline(file, type, '\n');
+    getline(file, sType, '\n');
     getline(file, json, '\n');
-    if (type == "Creature")
-        //this->package = new CreaturePackage(json);
-        int i;
-    else if (type == "Effect")
-        this->package = new EffectPackage(json);
-    /*else if (type == "Item")
-        this->package = new ItemPackage(json);
-    else if (type == "Move")
-        this->package = new MovePackage(json);
-    else if (type == "Trigger")
-        this->package = new TriggerPackage(json);
-    else if (type == "Type")
-        this->package = new TypePackage(json);*/
+    if (sType == "Creature")
+        type = 0;
+    else if (sType == "Effect")
+        type = 1;
+    else if (sType == "Item")
+        type = 2;
+    else if (sType == "Move")
+        type = 3;
+    else if (sType == "Trigger")
+        type = 4;
+    else if (sType == "Type")
+        type = 5;
+    this->package = new Package(type, json);
 }
 
 void PackageExplorer::display() {
@@ -47,7 +43,7 @@ void PackageExplorer::down() {
 }
 
 void PackageExplorer::enter() {
-    index[++depth] = 0;
+    index[++depth]++;
 }
 
 void PackageExplorer::leave() {
