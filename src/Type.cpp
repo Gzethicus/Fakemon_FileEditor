@@ -14,48 +14,64 @@ Type::Type (Json::Value val){
 
     for (Json::ValueIterator factor = val.begin(); factor != val.end(); factor++){
         this->factors[factor.name()] = val[factor.name()].asFloat();
+        this->order.push_back(factor.name());
     }
 }
 
 string Type::getFormattedStats (){
     string formatted = "";
-    string type;
     int indent;
-    for (auto key : this->factors) {
-        type = key.first;
+    for (string type : this->order) {
         indent = 2 - ((type.length() + 2) /8);  //compute the number of remaining indents to reach a 3 * 8 indent, accounting for " :" (2 chars)
-        formatted += "\t" + type + " :" + string(indent, '\t') + to_string(key.second) + "\n";
+        formatted += "\t" + type + " :" + string(indent, '\t') + to_string(this->factors[type]) + "\n";
     }
     return formatted;
 }
 
 Json::Value Type::jsonExport (){
     Json::Value json;
-    for (auto key : this->factors)
-        json[key.first] = key.second;
+    for (string type : this->order)
+        json[type] = this->factors[type];
     return json;
 }
 
 void Type::display(int indexes[2]){
     int i = 0;
     int indent;
-    string type;
-    for (pair<string,float> key: this->factors){
-        type = key.first;
-        indent = 2 - ((type.length() + 2) /8);  //compute the number of remaining indents to reach a 3 * 8 indent, accounting for " :" (2 chars)
+    if (indexes[0] > this->order.size())
+        indexes[0] = this->order.size();
+    for (string type: this->order){
+        indent = 2 - ((type.length() + (indexes[0] == i ? 3 : 2)) /8);  //compute the number of remaining indents to reach a 3 * 8 indent, accounting for " :" (2 chars) and potentially ">" (1 more char)
         cout << "\t";
         if (indexes[0] == i++)
             cout << ">";
-        cout << type << " :" << string(indent, '\t') << to_string(key.second) << endl;
+        cout << type << " :" << string(indent, '\t') << to_string(this->factors[type]) << "\n";
     }
+    cout << "\t";
+    if (indexes[0] == i)
+        cout << ">";
+    cout << "New type" << "\n";
 }
 
-void Type::setField(int indexes[2], string value){
-    
+bool Type::prompt(int indexes[2]){
+    string val;
+    cin >> val;
+    if (indexes[0] == this->order.size()){
+        this->order.push_back(val);
+        this->factors[val] = 1.f;
+    }
+    else
+        this->setField(indexes, val);
+    return true;
 }
 
 #pragma region getset
+void Type::setField(int indexes[2], string value){
+    this->factors[this->order[indexes[0]]] = stof(value);
+}
+
 void Type::setFactor (string type, float factor){
     this->factors[type] = factor;
+    this->order.push_back(type);
 }
 #pragma endregion getset

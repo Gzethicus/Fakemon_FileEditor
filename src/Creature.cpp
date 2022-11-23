@@ -2,7 +2,7 @@
 
 using namespace std;
 
-Creature::Creature() : stats{{100}}, moves{{""}}, type{""}{}
+Creature::Creature() : stats{100, 100, 100, 100}, moves{{""}}, type{""}{}
 
 Creature::Creature (Json::Value val){
     for (int i = 0; i < 4; i++)
@@ -45,6 +45,10 @@ Json::Value Creature::jsonExport (){
 }
 
 void Creature::display(int indexes[2]){
+    if (indexes[0] > 2)
+        indexes[0] = 2;
+    if (indexes[1] > 3)
+        indexes[1] = 3;
     cout << "\t";
     if (indexes[0] == 0)
         cout << ">";
@@ -60,7 +64,7 @@ void Creature::display(int indexes[2]){
     cout << "\t";
     if (indexes[0] == 2)
         cout << ">";
-    cout << "type :\t" << (this->type.empty() ? "undefined !" : this->type) << endl;
+    cout << "type :\t" << (this->type.empty() ? "undefined !" : this->type) << "\n";
 }
 
 void Creature::setField(int indexes[2], string value){
@@ -77,26 +81,35 @@ void Creature::setField(int indexes[2], string value){
     }
 }
 
+bool Creature::prompt(int indexes[2]){
+    if (indexes[0] < 2 && indexes[1] == -1)
+        return false;
+    string val;
+    cin >> val;
+    this->setField(indexes, val);
+    return true;
+}
+
 void Creature::displayStats(int index[1]){
     cout << "\t\t";
     if (index[0] == 0)
         cout << ">";
-    cout << "HP :\t" << to_string(this->stats[0]) << endl;
+    cout << "HP :\t" << to_string(this->stats[0]) << "\n";
 
     cout << "\t\t";
     if (index[0] == 1)
         cout << ">";
-    cout << "ATK :\t" << to_string(this->stats[1]) << endl;
+    cout << "ATK :\t" << to_string(this->stats[1]) << "\n";
 
     cout << "\t\t";
     if (index[0] == 2)
         cout << ">";
-    cout << "DEF :\t" << to_string(this->stats[2]) << endl;
+    cout << "DEF :\t" << to_string(this->stats[2]) << "\n";
 
     cout << "\t\t";
     if (index[0] == 3)
         cout << ">";
-    cout << "SPD :\t" << to_string(this->stats[3]) << endl;
+    cout << "SPD :\t" << to_string(this->stats[3]) << "\n";
 }
 
 void Creature::displayMoves(int index[1]){
@@ -104,7 +117,7 @@ void Creature::displayMoves(int index[1]){
         cout << "\t\t";
         if (i == index[0])
             cout << ">";
-        cout << (this->moves[i].empty() ? "undefined !" : this->moves[i]) << endl;
+        cout << (this->moves[i].empty() ? "undefined !" : this->moves[i]) << "\n";
     }
 }
 

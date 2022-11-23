@@ -25,8 +25,10 @@ int main(int argc,char* argv[]) {
     testPackage.addElement("Grass", test);
     testPackage.addElement("Water", test2);
 
+    int indexes[2] = {3, -1};
     cout << "test:\n" << test->getFormattedStats();
-    cout << "test2:\n" << test2->getFormattedStats();
+    cout << "test2:\n";
+    test2->display(indexes);
     cout << Json::writeString(builder, test->jsonExport()) << endl;
     cout << Json::writeString(builder, testPackage.jsonExport()) << endl;
 

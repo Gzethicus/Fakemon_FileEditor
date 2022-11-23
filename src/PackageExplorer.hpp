@@ -23,7 +23,7 @@ public:
     void up();
     void down();
     void enter();
-    void leave();
+    bool leave();
 };
 
 #endif

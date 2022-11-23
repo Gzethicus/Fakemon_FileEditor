@@ -1,6 +1,7 @@
 #include <iostream>
 #include <memory>
 #include <jsoncpp/json/json.h>
+#include <termios.h>
 
 #include "Effect.hpp"
 #include "Move.hpp"
@@ -11,6 +12,8 @@
 #include "Package.hpp"
 #include "PackageExplorer.hpp"
 
+#define STDIN_FILENO 0
+
 int main(int argc,char* argv[]) {
     PackageExplorer* explorer;
     if (argc != 2) {
@@ -19,17 +22,37 @@ int main(int argc,char* argv[]) {
     } else {
         explorer = new PackageExplorer(argv[1]);
     }
-    explorer->display();
-    explorer->down();
-    explorer->display();
-    explorer->enter();
-    explorer->display();
-    explorer->down();
-    explorer->down();
-    explorer->display();
-    explorer->leave();
-    explorer->display();
-    explorer->enter();
-    explorer->display();
+
+    int ch;
+    
+    struct termios t;
+    tcgetattr(STDIN_FILENO, &t);
+    t.c_lflag &= ~ICANON;
+    tcsetattr(STDIN_FILENO, TCSANOW, &t);
+    char c,d,e;
+    bool keepGoing = true;
+
+    while (keepGoing){
+        system("clear");
+        explorer->display();
+        cin >> c;
+        cin >> d;
+        cin >> e;
+        if ((c==27)&&(d=91)) {
+            if (e==65)
+                explorer->up();
+            if (e==66)
+                explorer->down();
+            if (e==67)
+                explorer->enter();
+            if (e==68){
+                if (!explorer->leave()){
+                    system("clear");
+                    keepGoing = false;
+                }
+            }
+        }
+    }
+    
     return 0;
 }

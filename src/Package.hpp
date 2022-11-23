@@ -24,33 +24,44 @@ private:
 
   // Operations
 public:
-  /**Creates a new empty package of specified type
-  @param type
-    0 - Creature ||
-    1 - Effect ||
-    2 - Item ||
-    3 - Move ||
-    4 - Trigger ||
-    5 - Type*/
+  /** Creates a new empty package of specified type
+   *  @param type
+   *  0 - Creature ||
+   *  1 - Effect ||
+   *  2 - Item ||
+   *  3 - Move ||
+   *  4 - Trigger ||
+   *  5 - Type*/
   Package (int type);
-  /**Creates a new package of specified type from the given json string
-  @param type
-    0 - Creature ||
-    1 - Effect ||
-    2 - Item ||
-    3 - Move ||
-    4 - Trigger ||
-    5 - Type
-    @param json A json representation of the package to build.*/
+
+  /** Creates a new package of specified type from the given json string
+   *  @param type
+   *  0 - Creature ||
+   *  1 - Effect ||
+   *  2 - Item ||
+   *  3 - Move ||
+   *  4 - Trigger ||
+   *  5 - Type
+   *  @param json A json representation of the package to build.*/
   Package (int type, string json);
+
   vector<string> getNames ();
   IPackageElement* get (string name);
-  // Returns the package as a json value.
-  // @return A Json::Value representation of this instance.
+  /** Returns the package as a json value.
+   *  @return A Json::Value representation of this instance.*/
   Json::Value jsonExport ();
+
+  /** Adds an element to this package.
+   *  @param name The unique identifier for the element.
+   *  @param element A pointer to the element to be added to the package.s*/
   void addElement (string name, IPackageElement* element);
-  // Displays the package to the console in a human-readable way.
-  // @param indexes The selected path.
+  
+  /** Displays the package to the console in a human-readable way.
+   *  @param indexes The selected path.*/
   void display (int indexes[3]);
+
+  /** Attempts to change selected item, potentially prompting from CLI.
+   *  @param indexes the tree to the selected item.*/
+  bool prompt (int indexes[3]);
 };
 #endif

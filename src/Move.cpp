@@ -35,35 +35,37 @@ Json::Value Move::jsonExport ( ){
 }
 
 void Move::display(int indexes[2]){
+    if (indexes[0] > 5)
+        indexes[0] = 5;
     cout << "\t";
     if (indexes[0] == 0)
         cout << ">";
-    cout << "power :\t\t" << to_string(this->power) << endl;
+    cout << "power :\t\t" << to_string(this->power) << "\n";
 
     cout << "\t";
     if (indexes[0] == 1)
         cout << ">";
-    cout << "type :\t\t" << (this->type.empty() ? "neutral" : this->type) << endl;
+    cout << "type :\t\t" << (this->type.empty() ? "neutral" : this->type) << "\n";
 
     cout << "\t";
     if (indexes[0] == 2)
         cout << ">";
-    cout << "max :\t\t" << to_string(this->max) << endl;
+    cout << "max :\t\t" << to_string(this->max) << "\n";
 
     cout << "\t";
     if (indexes[0] == 3)
         cout << ">";
-    cout << "hasPriority :\t" << to_string(this->priority) << endl;
+    cout << "hasPriority :\t" << to_string(this->priority) << "\n";
 
     cout << "\t";
     if (indexes[0] == 4)
         cout << ">";
-    cout << "effect :\t" << (this->effect.empty() ? "none" : this->effect) << endl;
+    cout << "effect :\t" << (this->effect.empty() ? "none" : this->effect) << "\n";
 
     cout << "\t";
     if (indexes[0] == 5)
         cout << ">";
-    cout << "sprite :\t" << (this->sprite.empty() ? "none" : this->sprite) << endl;
+    cout << "sprite :\t" << (this->sprite.empty() ? "none" : this->sprite) << "\n";
 }
 
 void Move::setField(int indexes[2], string value){
@@ -87,6 +89,17 @@ void Move::setField(int indexes[2], string value){
             this->sprite = value;
             break;
     }
+}
+
+bool Move::prompt(int indexes[2]){
+    if (indexes[0] == 3)
+        this->priority ^= true;
+    else{
+        string val;
+        cin >> val;
+        this->setField(indexes, val);
+    }
+    return true;
 }
 
 void Move::setPower (int power){

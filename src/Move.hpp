@@ -24,8 +24,8 @@ public:
   /// returns all fields of the instance in a nicely formatted string for printing to console
   std::string getFormattedStats ();
 
-  // Returns the move as a json value.
-  // @return A Json::Value representation of this instance.
+  /** Returns the move as a json value.
+   *  @return A Json::Value representation of this instance.*/
   Json::Value jsonExport();
 
   // Displays the move to the console in a human-readable way.
@@ -36,6 +36,10 @@ public:
         @param index The index of the field to edit.
         @param value A string representation of the new value.*/
     void setField(int indexes[2], string value);
+    
+    /** Execute the action to change the field designed by the given indexes
+     *  @param indexes The indexes of the field to change.*/
+    bool prompt(int indexes[2]);
 
   // Setters and Getters
   void setPower (int power);

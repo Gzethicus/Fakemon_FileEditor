@@ -30,6 +30,8 @@ Json::Value Effect::jsonExport (){
 }
 
 void Effect::display(int indexes[2]){
+    if (indexes[0] > 3)
+        indexes[0] = 3;
     cout << "\t";
     if (indexes[0] == 0)
         cout << ">";
@@ -49,6 +51,43 @@ void Effect::display(int indexes[2]){
     if (indexes[0] == 3)
         cout << ">";
     cout << "value :\t\t" << to_string(this->value) << "\n";
+}
+
+void Effect::setField(int indexes[2], string value){
+    switch (indexes[0]){
+        case 0:
+            this->targetSelf = !value.empty();
+            break;
+        case 1:
+            this->targetStat = stoi(value);
+            break;
+        case 2:
+            this->operation = stoi(value);
+            break;
+        case 3:
+            this->value = stof(value);
+            break;
+    }
+}
+
+bool Effect::prompt(int indexes[2]){
+    switch (indexes[0]){
+        case 0:
+            this->targetSelf ^= true;
+            break;
+        case 1:
+            this->targetStat = (this->targetStat + 1) % 4;
+            break;
+        case 2:
+            this->operation = (this->operation + 1) % 2;
+            break;
+        case 3:
+            string val;
+            cin >> val;
+            this->value = stof(val);
+            break;
+    }
+    return true;
 }
 
 #pragma region getset
@@ -79,23 +118,6 @@ inline string Effect::getStringStat (){
             return "Spd";
         default:
             return "Undefined";
-    }
-}
-
-void Effect::setField(int indexes[2], string value){
-    switch (indexes[0]){
-        case 0:
-            this->targetSelf = !value.empty();
-            break;
-        case 1:
-            this->targetStat = stoi(value);
-            break;
-        case 2:
-            this->operation = stoi(value);
-            break;
-        case 3:
-            this->value = stof(value);
-            break;
     }
 }
 

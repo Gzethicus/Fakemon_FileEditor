@@ -23,15 +23,17 @@ Json::Value Trigger::jsonExport (){
 }
 
 void Trigger::display(int indexes[2]){
+    if (indexes[0] > 1)
+        indexes[0] = 1;
     cout << "\t";
     if (indexes[0] == 0)
         cout << ">";
-    cout << "stat :\t\t" << this->getStringStat() << endl;
+    cout << "stat :\t\t" << this->getStringStat() << "\n";
 
     cout << "\t";
     if (indexes[0] == 1)
         cout << ">";
-    cout << "threshold :\t" << to_string(this->threshold) << endl;
+    cout << "threshold :\t" << to_string(this->threshold) << "\n";
 }
 
 void Trigger::setField(int indexes[2], string value){
@@ -43,6 +45,17 @@ void Trigger::setField(int indexes[2], string value){
             this->threshold = stoi(value);
             break;
     }
+}
+
+bool Trigger::prompt(int indexes[2]){
+    if (indexes[0] == 0)
+        this->stat = (this->stat + 1) % 4;
+    else{
+        string val;
+        cin >> val;
+        setField(indexes, val);
+    }
+    return true;
 }
 
 #pragma region getset

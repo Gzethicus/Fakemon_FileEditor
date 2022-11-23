@@ -66,9 +66,15 @@ void Package::display (int indexes[3]) {
     int* subindexes = &(indexes[1]);
     for (int i = 0; i < this->elements.size(); i++) {
         if (i == indexes[0]) {
-            cout << ">" << this->order[i] << endl;
+            cout << ">" << this->order[i] << "\n";
             this->elements[order[i]]->display(subindexes);
         } else
-            cout << this->order[i] << endl;
+            cout << this->order[i] << "\n";
     }
+}
+
+bool Package::prompt(int indexes[3]){
+    if (indexes[1] == -1)
+        return false;
+    return this->elements[order[indexes[0]]]->prompt(&indexes[1]);
 }

@@ -36,6 +36,8 @@ void PackageExplorer::display() {
 
 void PackageExplorer::up() {
     index[depth]--;
+    if (index[depth] < 0)
+        index[depth] = 0;
 }
 
 void PackageExplorer::down() {
@@ -43,9 +45,13 @@ void PackageExplorer::down() {
 }
 
 void PackageExplorer::enter() {
-    index[++depth]++;
+    if (!this->package->prompt(this->index))
+        index[++depth]++;
 }
 
-void PackageExplorer::leave() {
+bool PackageExplorer::leave() {
     index[depth--] = -1;
+    if (depth < 0)
+        return false;
+    return true;
 }

@@ -23,15 +23,17 @@ Json::Value Item::jsonExport (){
 }
 
 void Item::display (int indexes[2]){
+    if (indexes[0] > 1)
+        indexes[0] = 1;
     cout << "\t";
     if (indexes[0] == 0)
         cout << ">";
-    cout << "trigger :\t" << (this->trigger.empty() ? "undefined !" : this->trigger) << endl;
+    cout << "trigger :\t" << (this->trigger.empty() ? "undefined !" : this->trigger) << "\n";
 
     cout << "\t";
     if (indexes[0] == 1)
         cout << ">";
-    cout << "effect :\t" << (this->effect.empty() ? "undefined !" : this->effect) << endl;
+    cout << "effect :\t" << (this->effect.empty() ? "undefined !" : this->effect) << "\n";
 }
 
 void Item::setField(int indexes[2], string value){
@@ -43,6 +45,13 @@ void Item::setField(int indexes[2], string value){
             this->effect = value;
             break;
     }
+}
+
+bool Item::prompt(int indexes[2]){
+    string val;
+    cin >> val;
+    this->setField(indexes, val);
+    return true;
 }
 
 #pragma region getset
