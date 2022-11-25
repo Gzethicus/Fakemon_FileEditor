@@ -34,38 +34,40 @@ Json::Value Move::jsonExport ( ){
     return json;
 }
 
-void Move::display(int indexes[2]){
+stringstream Move::display(int indexes[2]){
+    stringstream ss;
     if (indexes[0] > 5)
         indexes[0] = 5;
-    cout << "\t";
+    ss << "\t";
     if (indexes[0] == 0)
-        cout << ">";
-    cout << "power :\t\t" << to_string(this->power) << "\n";
+        ss << ">";
+    ss << "power :\t\t" << to_string(this->power) << "\n";
 
-    cout << "\t";
+    ss << "\t";
     if (indexes[0] == 1)
-        cout << ">";
-    cout << "type :\t\t" << (this->type.empty() ? "neutral" : this->type) << "\n";
+        ss << ">";
+    ss << "type :\t\t" << (this->type.empty() ? "neutral" : this->type) << "\n";
 
-    cout << "\t";
+    ss << "\t";
     if (indexes[0] == 2)
-        cout << ">";
-    cout << "max :\t\t" << to_string(this->max) << "\n";
+        ss << ">";
+    ss << "max :\t\t" << to_string(this->max) << "\n";
 
-    cout << "\t";
+    ss << "\t";
     if (indexes[0] == 3)
-        cout << ">";
-    cout << "hasPriority :\t" << to_string(this->priority) << "\n";
+        ss << ">";
+    ss << "hasPriority :\t" << to_string(this->priority) << "\n";
 
-    cout << "\t";
+    ss << "\t";
     if (indexes[0] == 4)
-        cout << ">";
-    cout << "effect :\t" << (this->effect.empty() ? "none" : this->effect) << "\n";
+        ss << ">";
+    ss << "effect :\t" << (this->effect.empty() ? "none" : this->effect) << "\n";
 
-    cout << "\t";
+    ss << "\t";
     if (indexes[0] == 5)
-        cout << ">";
-    cout << "sprite :\t" << (this->sprite.empty() ? "none" : this->sprite) << "\n";
+        ss << ">";
+    ss << "sprite :\t" << (this->sprite.empty() ? "none" : this->sprite) << "\n";
+    return ss;
 }
 
 void Move::setField(int indexes[2], string value){
@@ -95,9 +97,10 @@ bool Move::prompt(int indexes[2]){
     if (indexes[0] == 3)
         this->priority ^= true;
     else{
-        string val;
-        cin >> val;
+        char* val = (char*)calloc(32, sizeof(char));
+        getstr(val);
         this->setField(indexes, val);
+        free(val);
     }
     return true;
 }

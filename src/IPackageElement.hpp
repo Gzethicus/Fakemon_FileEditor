@@ -1,7 +1,8 @@
 #ifndef IPACKAGEELEMENT__H
 #define IPACKAGEELEMENT__H
 
-#include <iostream>
+#include <sstream>
+#include <ncurses.h>
 #include <string>
 #include <vector>
 #include <jsoncpp/json/json.h>
@@ -15,8 +16,9 @@ class IPackageElement {
         virtual Json::Value jsonExport() = 0;
 
         /** Displays the element to the console in a human-readable way.
-         *  @param indexes The selected path.*/
-        virtual void display(int indexes[2]) = 0;
+         *  @param indexes The selected path.
+         *  @return A stringstream preformatted for printing to console.*/
+        virtual stringstream display(int indexes[2]) = 0;
 
         /** Sets an instance field.
          *  @param indexes The indexes of the field to edit.
@@ -24,7 +26,8 @@ class IPackageElement {
         virtual void setField(int indexes[2], string value) = 0;
 
         /** Execute the action to change the field designed by the given indexes.
-         *  @param indexes The indexes of the field to change.*/
+         *  @param indexes The indexes of the field to change.
+         *  @return `true` if a field has been modified, `false` if the explorer should go deeper.*/
         virtual bool prompt(int indexes[2]) = 0;
 };
 #endif

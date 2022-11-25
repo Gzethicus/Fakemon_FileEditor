@@ -1,4 +1,3 @@
-#include <iostream>
 #include "Effect.hpp"
 
 using namespace std;
@@ -29,28 +28,30 @@ Json::Value Effect::jsonExport (){
     return json;
 }
 
-void Effect::display(int indexes[2]){
+stringstream Effect::display(int indexes[2]){
+    stringstream ss;
     if (indexes[0] > 3)
         indexes[0] = 3;
-    cout << "\t";
+    ss << "\t";
     if (indexes[0] == 0)
-        cout << ">";
-    cout << "target :\t" << this->getStringTarget() << "\n";
+        ss << ">";
+    ss << "target :\t" << this->getStringTarget() << "\n";
 
-    cout << "\t";
+    ss << "\t";
     if (indexes[0] == 1)
-        cout << ">";
-    cout << "stat :\t\t" << this->getStringStat() << "\n";
+        ss << ">";
+    ss << "stat :\t\t" << this->getStringStat() << "\n";
 
-    cout << "\t";
+    ss << "\t";
     if (indexes[0] == 2)
-        cout << ">";
-    cout << "operation :\t" << this->getStringOperator() << "\n";
+        ss << ">";
+    ss << "operation :\t" << this->getStringOperator() << "\n";
 
-    cout << "\t";
+    ss << "\t";
     if (indexes[0] == 3)
-        cout << ">";
-    cout << "value :\t\t" << to_string(this->value) << "\n";
+        ss << ">";
+    ss << "value :\t\t" << to_string(this->value) << "\n";
+    return ss;
 }
 
 void Effect::setField(int indexes[2], string value){
@@ -82,9 +83,10 @@ bool Effect::prompt(int indexes[2]){
             this->operation = (this->operation + 1) % 2;
             break;
         case 3:
-            string val;
-            cin >> val;
+            char* val = (char*)calloc(32, sizeof(char));
+            getstr(val);
             this->value = stof(val);
+            free(val);
             break;
     }
     return true;

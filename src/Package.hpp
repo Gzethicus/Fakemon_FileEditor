@@ -3,7 +3,7 @@
 
 #include <string>
 #include <unordered_map>
-#include <vector>
+#include <set>
 #include <jsoncpp/json/json.h>
 
 #include "Creature.hpp"
@@ -20,7 +20,7 @@ class Package {
 private:
   int type;
   unordered_map<string, IPackageElement*> elements;
-  vector<string> order;
+  set<string> order;
 
   // Operations
 public:
@@ -45,7 +45,7 @@ public:
    *  @param json A json representation of the package to build.*/
   Package (int type, string json);
 
-  vector<string> getNames ();
+  set<string> getNames ();
   IPackageElement* get (string name);
   /** Returns the package as a json value.
    *  @return A Json::Value representation of this instance.*/
@@ -55,13 +55,19 @@ public:
    *  @param name The unique identifier for the element.
    *  @param element A pointer to the element to be added to the package.s*/
   void addElement (string name, IPackageElement* element);
+
+  /** Adds an element to this package.
+   *  @param name The unique identifier for the element.*/
+  void addNew (string name);
   
-  /** Displays the package to the console in a human-readable way.
-   *  @param indexes The selected path.*/
-  void display (int indexes[3]);
+  /** Returns the package in a human-readable stringstream.
+   *  @param indexes The selected path.
+   *  @return A stringstream preformatted for printing to console.*/
+  stringstream display (int indexes[3]);
 
   /** Attempts to change selected item, potentially prompting from CLI.
-   *  @param indexes the tree to the selected item.*/
+   *  @param indexes the tree to the selected item.
+   *  @return `true` if a field has been modified, `false` if the explorer should go deeper.*/
   bool prompt (int indexes[3]);
 };
 #endif

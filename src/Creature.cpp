@@ -44,27 +44,29 @@ Json::Value Creature::jsonExport (){
     return json;
 }
 
-void Creature::display(int indexes[2]){
+stringstream Creature::display(int indexes[2]){
+    stringstream ss;
     if (indexes[0] > 2)
         indexes[0] = 2;
     if (indexes[1] > 3)
         indexes[1] = 3;
-    cout << "\t";
+    ss << "\t";
     if (indexes[0] == 0)
-        cout << ">";
-    cout << "stat :\n";
+        ss << ">";
+    ss << "stat :\n";
     this->displayStats(indexes[0] == 0 ? &(indexes[1]) : (int*) -1);
 
-    cout << "\t";
+    ss << "\t";
     if (indexes[0] == 1)
-        cout << ">";
-    cout << "moves :\n";
+        ss << ">";
+    ss << "moves :\n";
     this->displayMoves(indexes[0] == 1 ? &(indexes[1]) : (int*) -1);
 
-    cout << "\t";
+    ss << "\t";
     if (indexes[0] == 2)
-        cout << ">";
-    cout << "type :\t" << (this->type.empty() ? "undefined !" : this->type) << "\n";
+        ss << ">";
+    ss << "type :\t" << (this->type.empty() ? "undefined !" : this->type) << "\n";
+    return ss;
 }
 
 void Creature::setField(int indexes[2], string value){
@@ -84,41 +86,46 @@ void Creature::setField(int indexes[2], string value){
 bool Creature::prompt(int indexes[2]){
     if (indexes[0] < 2 && indexes[1] == -1)
         return false;
-    string val;
-    cin >> val;
+    char* val = (char*)calloc(32, sizeof(char));
+    getstr(val);
     this->setField(indexes, val);
+    free(val);
     return true;
 }
 
 void Creature::displayStats(int index[1]){
-    cout << "\t\t";
+    stringstream ss;
+    ss << "\t\t";
     if (index[0] == 0)
-        cout << ">";
-    cout << "HP :\t" << to_string(this->stats[0]) << "\n";
+        ss << ">";
+    ss << "HP :\t" << to_string(this->stats[0]) << "\n";
 
-    cout << "\t\t";
+    ss << "\t\t";
     if (index[0] == 1)
-        cout << ">";
-    cout << "ATK :\t" << to_string(this->stats[1]) << "\n";
+        ss << ">";
+    ss << "ATK :\t" << to_string(this->stats[1]) << "\n";
 
-    cout << "\t\t";
+    ss << "\t\t";
     if (index[0] == 2)
-        cout << ">";
-    cout << "DEF :\t" << to_string(this->stats[2]) << "\n";
+        ss << ">";
+    ss << "DEF :\t" << to_string(this->stats[2]) << "\n";
 
-    cout << "\t\t";
+    ss << "\t\t";
     if (index[0] == 3)
-        cout << ">";
-    cout << "SPD :\t" << to_string(this->stats[3]) << "\n";
+        ss << ">";
+    ss << "SPD :\t" << to_string(this->stats[3]) << "\n";
+    printw(ss.str().c_str());
 }
 
 void Creature::displayMoves(int index[1]){
+    stringstream ss;
     for (int i = 0; i < NMOVES; i++){
-        cout << "\t\t";
+        ss << "\t\t";
         if (i == index[0])
-            cout << ">";
-        cout << (this->moves[i].empty() ? "undefined !" : this->moves[i]) << "\n";
+            ss << ">";
+        ss << (this->moves[i].empty() ? "undefined !" : this->moves[i]) << "\n";
     }
+    printw(ss.str().c_str());
 }
 
 #pragma region getset

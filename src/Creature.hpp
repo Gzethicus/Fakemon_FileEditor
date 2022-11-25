@@ -24,15 +24,17 @@ class Creature : public IPackageElement {
      *  @return A Json::Value representation of this instance.*/
     Json::Value jsonExport ();
     /** Displays the creature to the console in a human-readable way.
-     *  @param indexes The selected path.*/
-    void display(int indexes[2]);
+     *  @param indexes The selected path.
+     *  @return A stringstream preformatted for printing to console.*/
+    stringstream display(int indexes[2]);
     /** Sets an instance field.
      *  @param index The index of the field to edit.
      *  @param value A string representation of the new value.*/
     void setField(int indexes[2], string value);
 
     /** Execute the action to change the field designed by the given indexes
-     *  @param indexes The indexes of the field to change.*/
+     *  @param indexes The indexes of the field to change.
+     *  @return `true` if a field has been modified, `false` if the explorer should go deeper.*/
     bool prompt(int indexes[2]);
 
     // Setters and Getters

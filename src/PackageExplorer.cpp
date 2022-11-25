@@ -29,9 +29,13 @@ PackageExplorer::PackageExplorer(string fileName): index{0, -1, -1}, depth{0} {
     this->package = new Package(type, json);
 }
 
-void PackageExplorer::display() {
-    this->package->display(this->index);
-    cout << endl;
+void PackageExplorer::display(bool clearScreen) {
+    if (refresh){
+        clear();
+        refresh();
+    }
+    printw(this->package->display(this->index).str().c_str());
+    printw("\n");
 }
 
 void PackageExplorer::up() {

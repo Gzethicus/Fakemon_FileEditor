@@ -1,4 +1,5 @@
-#include <iostream>
+#include <sstream>
+#include <ncurses.h>
 #include <memory>
 #include "Package.hpp"
 
@@ -38,11 +39,11 @@ Package::Package (int type, string json) : type(type) {
                 this->elements[element.name()] = new Type(val[element.name()]);
                 break;
         }
-        this->order.push_back(element.name());
+        this->order.insert(element.name());
     }
 }
 
-vector<string> Package::getNames () {
+set<string> Package::getNames () {
     return this->order;
 }
 
@@ -57,24 +58,63 @@ Json::Value Package::jsonExport (){
     return package;
 }
 
-void Package::addElement (string name, IPackageElement* element){
-    this->elements[name] = element;
-    this->order.push_back(name);
+void Package::addNew(string name){
+    if (this->order.find(name) != this->order.end())
+        return;
+    IPackageElement* element;
+    switch (this->type){
+        case 0: // Creature
+            element = new Creature();
+            break;
+        case 1: // Effect
+            element = new Effect();
+            break;
+        case 2: // Item
+            element = new Item();
+            break;
+        case 3: // Move
+            element = new Move();
+            break;
+        case 4: // Trigger
+            element = new Trigger();
+            break;
+        case 5: // Type
+            element = new Type();
+            break;
+    }
+    this->addElement(name, element);
 }
 
-void Package::display (int indexes[3]) {
-    int* subindexes = &(indexes[1]);
-    for (int i = 0; i < this->elements.size(); i++) {
-        if (i == indexes[0]) {
-            cout << ">" << this->order[i] << "\n";
-            this->elements[order[i]]->display(subindexes);
+void Package::addElement (string name, IPackageElement* element){
+    this->elements[name] = element;
+    this->order.insert(name);
+}
+
+stringstream Package::display (int indexes[3]){
+    stringstream ss;
+    int i = 0;
+    if (indexes[0] > this->order.size())
+        indexes[0] = this->order.size();
+    for (string element : this->order) {
+        if (indexes[0] == i++) {
+            ss << ">" << element << "\n" << this->elements[element]->display(&(indexes[1])).str();
         } else
-            cout << this->order[i] << "\n";
+            ss << element << "\n";
     }
+    if (indexes[0] == this->order.size())
+        ss << ">";
+    ss << "New\n";
+    return ss;
 }
 
 bool Package::prompt(int indexes[3]){
+    if (indexes[0] == this->order.size()){
+        char* val = (char*)calloc(32, sizeof(char));
+        getstr(val);
+        this->addNew(val);
+        return true;
+    }
     if (indexes[1] == -1)
         return false;
-    return this->elements[order[indexes[0]]]->prompt(&indexes[1]);
+    return this->elements[*next(this->order.cbegin(), indexes[0])]->prompt(&indexes[1]);
 }

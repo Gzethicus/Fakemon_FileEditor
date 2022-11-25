@@ -35,33 +35,36 @@ Json::Value Type::jsonExport (){
     return json;
 }
 
-void Type::display(int indexes[2]){
+stringstream Type::display(int indexes[2]){
+    stringstream ss;
     int i = 0;
     int indent;
     if (indexes[0] > this->order.size())
         indexes[0] = this->order.size();
     for (string type: this->order){
         indent = 2 - ((type.length() + (indexes[0] == i ? 3 : 2)) /8);  //compute the number of remaining indents to reach a 3 * 8 indent, accounting for " :" (2 chars) and potentially ">" (1 more char)
-        cout << "\t";
+        ss << "\t";
         if (indexes[0] == i++)
-            cout << ">";
-        cout << type << " :" << string(indent, '\t') << to_string(this->factors[type]) << "\n";
+            ss << ">";
+        ss << type << " :" << string(indent, '\t') << to_string(this->factors[type]) << "\n";
     }
-    cout << "\t";
+    ss << "\t";
     if (indexes[0] == i)
-        cout << ">";
-    cout << "New type" << "\n";
+        ss << ">";
+    ss << "New type" << "\n";
+    return ss;
 }
 
 bool Type::prompt(int indexes[2]){
-    string val;
-    cin >> val;
+    char* val = (char*)calloc(32, sizeof(char));
+    getstr(val);
     if (indexes[0] == this->order.size()){
         this->order.push_back(val);
         this->factors[val] = 1.f;
     }
     else
         this->setField(indexes, val);
+    free(val);
     return true;
 }
 

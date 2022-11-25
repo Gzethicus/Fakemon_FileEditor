@@ -19,7 +19,7 @@ private:
 
 public:
     PackageExplorer(string file);
-    void display();
+    void display(bool clearScreen);
     void up();
     void down();
     void enter();

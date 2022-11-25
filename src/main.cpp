@@ -1,6 +1,7 @@
 #include <iostream>
 #include <memory>
 #include <jsoncpp/json/json.h>
+#include <ncurses.h>
 #include <termios.h>
 
 #include "Effect.hpp"
@@ -22,6 +23,8 @@ int main(int argc,char* argv[]) {
     } else {
         explorer = new PackageExplorer(argv[1]);
     }
+    initscr();
+    keypad(stdscr, true);
 
     int ch;
     
@@ -33,26 +36,25 @@ int main(int argc,char* argv[]) {
     bool keepGoing = true;
 
     while (keepGoing){
-        system("clear");
-        explorer->display();
-        cin >> c;
-        cin >> d;
-        cin >> e;
-        if ((c==27)&&(d=91)) {
-            if (e==65)
+        explorer->display(true);
+        ch = getch();
+        switch (ch){
+            case KEY_UP:
                 explorer->up();
-            if (e==66)
+                break;
+            case KEY_DOWN:
                 explorer->down();
-            if (e==67)
+                break;
+            case KEY_RIGHT:
                 explorer->enter();
-            if (e==68){
-                if (!explorer->leave()){
-                    system("clear");
+                break;
+            case KEY_LEFT:
+                if (!explorer->leave())
                     keepGoing = false;
-                }
-            }
+                break;
         }
     }
     
+    endwin();
     return 0;
 }

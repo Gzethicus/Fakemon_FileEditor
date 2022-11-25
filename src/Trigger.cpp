@@ -22,18 +22,20 @@ Json::Value Trigger::jsonExport (){
     return json;
 }
 
-void Trigger::display(int indexes[2]){
+stringstream Trigger::display(int indexes[2]){
+    stringstream ss;
     if (indexes[0] > 1)
         indexes[0] = 1;
-    cout << "\t";
+    ss << "\t";
     if (indexes[0] == 0)
-        cout << ">";
-    cout << "stat :\t\t" << this->getStringStat() << "\n";
+        ss << ">";
+    ss << "stat :\t\t" << this->getStringStat() << "\n";
 
-    cout << "\t";
+    ss << "\t";
     if (indexes[0] == 1)
-        cout << ">";
-    cout << "threshold :\t" << to_string(this->threshold) << "\n";
+        ss << ">";
+    ss << "threshold :\t" << to_string(this->threshold) << "\n";
+    return ss;
 }
 
 void Trigger::setField(int indexes[2], string value){
@@ -51,9 +53,10 @@ bool Trigger::prompt(int indexes[2]){
     if (indexes[0] == 0)
         this->stat = (this->stat + 1) % 4;
     else{
-        string val;
-        cin >> val;
+        char* val = (char*)calloc(32, sizeof(char));
+        getstr(val);
         setField(indexes, val);
+        free(val);
     }
     return true;
 }

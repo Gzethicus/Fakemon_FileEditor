@@ -1,4 +1,5 @@
 JSON = -ljsoncpp
+CLI = -lncurses
 BMAIN = -o file-editor build/main.o
 BUILD = -o build/main.o -c src/main
 BUILCOMP = g++ ${BMAIN} ${BELEMENTS} ${BPACKAGE} ${JSON}
@@ -26,7 +27,7 @@ HCR = src/Creature.hpp
 HELEMENTS = ${HEF} ${HMO} ${HTR} ${HIT} ${HTY} ${HCR}
 
 all: Package.o PackageExplorer.o ${OELEMENTS} main.o
-	g++ ${BMAIN} ${BPACKAGE} ${BEXPLORER} ${BELEMENTS} ${JSON}
+	g++ ${BMAIN} ${BPACKAGE} ${BEXPLORER} ${BELEMENTS} ${JSON} ${CLI}
 
 main.o: src/PackageExplorer.hpp ${HELEMENTS}
 	$B

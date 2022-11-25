@@ -22,18 +22,20 @@ Json::Value Item::jsonExport (){
     return json;
 }
 
-void Item::display (int indexes[2]){
+stringstream Item::display (int indexes[2]){
+    stringstream ss;
     if (indexes[0] > 1)
         indexes[0] = 1;
-    cout << "\t";
+    ss << "\t";
     if (indexes[0] == 0)
-        cout << ">";
-    cout << "trigger :\t" << (this->trigger.empty() ? "undefined !" : this->trigger) << "\n";
+        ss << ">";
+    ss << "trigger :\t" << (this->trigger.empty() ? "undefined !" : this->trigger) << "\n";
 
-    cout << "\t";
+    ss << "\t";
     if (indexes[0] == 1)
-        cout << ">";
-    cout << "effect :\t" << (this->effect.empty() ? "undefined !" : this->effect) << "\n";
+        ss << ">";
+    ss << "effect :\t" << (this->effect.empty() ? "undefined !" : this->effect) << "\n";
+    return ss;
 }
 
 void Item::setField(int indexes[2], string value){
@@ -48,9 +50,10 @@ void Item::setField(int indexes[2], string value){
 }
 
 bool Item::prompt(int indexes[2]){
-    string val;
-    cin >> val;
+    char* val = (char*)calloc(32, sizeof(char));
+    getstr(val);
     this->setField(indexes, val);
+    free(val);
     return true;
 }
 
