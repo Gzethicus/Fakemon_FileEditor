@@ -34,8 +34,7 @@ Json::Value Move::jsonExport ( ){
     return json;
 }
 
-stringstream Move::display(int indexes[2]){
-    stringstream ss;
+void Move::display(int indexes[2], stringstream& ss){
     if (indexes[0] > 5)
         indexes[0] = 5;
     ss << "\t";
@@ -67,7 +66,6 @@ stringstream Move::display(int indexes[2]){
     if (indexes[0] == 5)
         ss << ">";
     ss << "sprite :\t" << (this->sprite.empty() ? "none" : this->sprite) << "\n";
-    return ss;
 }
 
 void Move::setField(int indexes[2], string value){

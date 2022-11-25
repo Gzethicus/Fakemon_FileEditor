@@ -35,8 +35,7 @@ Json::Value Type::jsonExport (){
     return json;
 }
 
-stringstream Type::display(int indexes[2]){
-    stringstream ss;
+void Type::display(int indexes[2], stringstream& ss){
     int i = 0;
     int indent;
     if (indexes[0] > this->order.size())
@@ -52,7 +51,6 @@ stringstream Type::display(int indexes[2]){
     if (indexes[0] == i)
         ss << ">";
     ss << "New type" << "\n";
-    return ss;
 }
 
 bool Type::prompt(int indexes[2]){

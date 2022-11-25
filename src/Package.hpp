@@ -55,8 +55,8 @@ public:
   
   /** Returns the package in a human-readable stringstream.
    *  @param indexes The selected path.
-   *  @return A stringstream preformatted for printing to console.*/
-  stringstream display (int indexes[3]);
+   *  @param ss A stringstream to append content to, preformatted for printing to console.*/
+  void display (int indexes[3], stringstream& ss);
 
   /** Attempts to change selected item, potentially prompting from CLI.
    *  @param indexes the tree to the selected item.

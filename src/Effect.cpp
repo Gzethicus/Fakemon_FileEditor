@@ -28,8 +28,7 @@ Json::Value Effect::jsonExport (){
     return json;
 }
 
-stringstream Effect::display(int indexes[2]){
-    stringstream ss;
+void Effect::display(int indexes[2], stringstream& ss){
     if (indexes[0] > 3)
         indexes[0] = 3;
     ss << "\t";
@@ -50,8 +49,7 @@ stringstream Effect::display(int indexes[2]){
     ss << "\t";
     if (indexes[0] == 3)
         ss << ">";
-    ss << "value :\t\t" << to_string(this->value) << "\n";
-    return ss;
+    ss << (indexes[0] == 3 ? "value :\t" : "value :\t\t") << to_string(this->value) << "\n";
 }
 
 void Effect::setField(int indexes[2], string value){

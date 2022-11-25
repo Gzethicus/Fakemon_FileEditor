@@ -25,8 +25,8 @@ class Creature : public IPackageElement {
     Json::Value jsonExport ();
     /** Displays the creature to the console in a human-readable way.
      *  @param indexes The selected path.
-     *  @return A stringstream preformatted for printing to console.*/
-    stringstream display(int indexes[2]);
+     *  @param ss A stringstream to append content to, preformatted for printing to console.*/
+    void display(int indexes[2], stringstream& ss);
     /** Sets an instance field.
      *  @param index The index of the field to edit.
      *  @param value A string representation of the new value.*/
@@ -43,7 +43,7 @@ class Creature : public IPackageElement {
     void setType (string type);
   
   private:
-    inline void displayStats(int* index);
-    inline void displayMoves(int* index);
+    inline void displayStats(int* index, stringstream& ss);
+    inline void displayMoves(int* index, stringstream& ss);
 };
 #endif

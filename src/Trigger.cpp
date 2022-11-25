@@ -22,8 +22,7 @@ Json::Value Trigger::jsonExport (){
     return json;
 }
 
-stringstream Trigger::display(int indexes[2]){
-    stringstream ss;
+void Trigger::display(int indexes[2], stringstream& ss){
     if (indexes[0] > 1)
         indexes[0] = 1;
     ss << "\t";
@@ -35,7 +34,6 @@ stringstream Trigger::display(int indexes[2]){
     if (indexes[0] == 1)
         ss << ">";
     ss << "threshold :\t" << to_string(this->threshold) << "\n";
-    return ss;
 }
 
 void Trigger::setField(int indexes[2], string value){

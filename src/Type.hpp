@@ -28,8 +28,8 @@ class Type : public IPackageElement {
 
     /** Displays the type to the console in a human-readable way.
      *  @param indexes The selected path.
-     *  @return A stringstream preformatted for printing to console.*/
-    stringstream display(int indexes[2]);
+     *  @param ss A stringstream to append content to, preformatted for printing to console.*/
+    void display(int indexes[2], stringstream& ss);
 
     /** Sets an instance field.
      *  @param index The index of the field to edit.

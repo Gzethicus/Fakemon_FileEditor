@@ -21,7 +21,9 @@ void PackageExplorer::display(bool clearScreen) {
         clear();
         refresh();
     }
-    printw(this->package->display(&(this->index[1])).str().c_str());
+    stringstream ss;
+    this->package->display(&(this->index[1]), ss);
+    printw(ss.str().c_str());
     printw("\n");
     if (depth == 0) {
         string promptSave;

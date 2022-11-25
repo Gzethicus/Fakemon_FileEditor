@@ -44,8 +44,7 @@ Json::Value Creature::jsonExport (){
     return json;
 }
 
-stringstream Creature::display(int indexes[2]){
-    stringstream ss;
+void Creature::display(int indexes[2], stringstream& ss){
     if (indexes[0] > 2)
         indexes[0] = 2;
     if (indexes[1] > 3)
@@ -54,19 +53,18 @@ stringstream Creature::display(int indexes[2]){
     if (indexes[0] == 0)
         ss << ">";
     ss << "stat :\n";
-    this->displayStats(indexes[0] == 0 ? &(indexes[1]) : (int*) -1);
+    this->displayStats(indexes[0] == 0 ? &(indexes[1]) : (int*) -1, ss);
 
     ss << "\t";
     if (indexes[0] == 1)
         ss << ">";
     ss << "moves :\n";
-    this->displayMoves(indexes[0] == 1 ? &(indexes[1]) : (int*) -1);
+    this->displayMoves(indexes[0] == 1 ? &(indexes[1]) : (int*) -1, ss);
 
     ss << "\t";
     if (indexes[0] == 2)
         ss << ">";
     ss << "type :\t" << (this->type.empty() ? "undefined !" : this->type) << "\n";
-    return ss;
 }
 
 void Creature::setField(int indexes[2], string value){
@@ -93,39 +91,32 @@ bool Creature::prompt(int indexes[2]){
     return true;
 }
 
-void Creature::displayStats(int index[1]){
-    stringstream ss;
+void Creature::displayStats(int index[1], stringstream& ss){
     ss << "\t\t";
     if (index[0] == 0)
         ss << ">";
-    ss << "HP :\t" << to_string(this->stats[0]) << "\n";
+    ss << "HP :\t" << to_string(this->stats[0]) << "\n\t\t";
 
-    ss << "\t\t";
     if (index[0] == 1)
         ss << ">";
-    ss << "ATK :\t" << to_string(this->stats[1]) << "\n";
+    ss << "ATK :\t" << to_string(this->stats[1]) << "\n\t\t";
 
-    ss << "\t\t";
     if (index[0] == 2)
         ss << ">";
-    ss << "DEF :\t" << to_string(this->stats[2]) << "\n";
+    ss << "DEF :\t" << to_string(this->stats[2]) << "\n\t\t";
 
-    ss << "\t\t";
     if (index[0] == 3)
         ss << ">";
     ss << "SPD :\t" << to_string(this->stats[3]) << "\n";
-    printw(ss.str().c_str());
 }
 
-void Creature::displayMoves(int index[1]){
-    stringstream ss;
+void Creature::displayMoves(int index[1], stringstream& ss){
     for (int i = 0; i < NMOVES; i++){
         ss << "\t\t";
         if (i == index[0])
             ss << ">";
         ss << (this->moves[i].empty() ? "undefined !" : this->moves[i]) << "\n";
     }
-    printw(ss.str().c_str());
 }
 
 #pragma region getset

@@ -18,7 +18,7 @@ class IPackageElement {
         /** Displays the element to the console in a human-readable way.
          *  @param indexes The selected path.
          *  @return A stringstream preformatted for printing to console.*/
-        virtual stringstream display(int indexes[2]) = 0;
+        virtual void display(int indexes[2], stringstream& ss) = 0;
 
         /** Sets an instance field.
          *  @param indexes The indexes of the field to edit.

@@ -22,8 +22,7 @@ Json::Value Item::jsonExport (){
     return json;
 }
 
-stringstream Item::display (int indexes[2]){
-    stringstream ss;
+void Item::display (int indexes[2], stringstream& ss){
     if (indexes[0] > 1)
         indexes[0] = 1;
     ss << "\t";
@@ -35,7 +34,6 @@ stringstream Item::display (int indexes[2]){
     if (indexes[0] == 1)
         ss << ">";
     ss << "effect :\t" << (this->effect.empty() ? "undefined !" : this->effect) << "\n";
-    return ss;
 }
 
 void Item::setField(int indexes[2], string value){

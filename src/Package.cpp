@@ -93,22 +93,21 @@ void Package::addElement (string name, IPackageElement* element){
     this->order.insert(name);
 }
 
-stringstream Package::display (int indexes[3]){
-    stringstream ss;
+void Package::display (int indexes[3], stringstream& ss){
     int i = 0;
     if (indexes[0] > (int)this->order.size()){
         indexes[0] = this->order.size();
     }
     for (string element : this->order) {
         if (indexes[0] == i++) {
-            ss << ">" << element << "\n" << this->elements[element]->display(&(indexes[1])).str();
+            ss << ">" << element << "\n";
+            this->elements[element]->display(&(indexes[1]), ss);
         } else
             ss << element << "\n";
     }
     if (indexes[0] == this->order.size())
         ss << ">";
     ss << "New\n";
-    return ss;
 }
 
 bool Package::prompt(int indexes[3]){
