@@ -16,10 +16,11 @@ class Trigger : public IPackageElement{
 
     // Operations
   public:
+    /** Instantiates a Trigger on 100% HP.*/
     Trigger ();
+    /** Instantiates a Trigger corresponding to the given Json value.
+     *  @param val A Json::Value that represents the Trigger to be instanciated.*/
     Trigger (Json::Value val);
-    /// returns all fields of the instance in a nicely formatted string for printing to console
-    string getFormattedStats ();
 
     /** Returns the trigger as a json value.
      *  @return A Json::Value representation of this instance.*/
@@ -40,8 +41,15 @@ class Trigger : public IPackageElement{
      *  @return `true` if a field has been modified, `false` if the explorer should go deeper.*/
     bool prompt(int indexes[2]);
 
-    // Setters and Getters
+    /** Sets the stat on which effects will be triggered.
+     *  @param stat 0 - HP ||
+     *  1 - ATK ||
+     *  2 - DEF ||
+     *  3 - SPD*/
     void setStat (int stat);
+
+    /** Sets the threshold on which the effect will be triggered.
+     *  @param threshold Percentage value (0-100, or more for triggers on increased stat)*/
     void setThreshold (int threshold);
 
   private:

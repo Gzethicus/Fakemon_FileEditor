@@ -8,18 +8,17 @@
 using namespace std;
 
 class Creature : public IPackageElement {
-    // Attributes
   private:
     int stats[4];
     string moves[NMOVES];
     string type;
 
-    // Operations
   public:
+    /** Instantiates a Creature with default stats, no moves and no type.*/
     Creature ();
+    /** Instantiates a Creature corresponding to the given Json value.
+     *  @param val A Json::Value that represents the Creature to be instanciated.*/
     Creature (Json::Value val);
-    /// returns all fields of the instance in a nicely formatted string for printing to console
-    string getFormattedStats ();
     /** Returns the creature as a json value.
      *  @return A Json::Value representation of this instance.*/
     Json::Value jsonExport ();
@@ -37,7 +36,6 @@ class Creature : public IPackageElement {
      *  @return `true` if a field has been modified, `false` if the explorer should go deeper.*/
     bool prompt(int indexes[2]);
 
-    // Setters and Getters
     void setStat (int stat, int value);
     void setMove (int id, string move);
     void setType (string type);

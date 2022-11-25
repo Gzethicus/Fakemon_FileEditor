@@ -51,6 +51,7 @@ bool Trigger::prompt(int indexes[2]){
     if (indexes[0] == 0)
         this->stat = (this->stat + 1) % 4;
     else{
+        printw(">");
         char* val = (char*)calloc(32, sizeof(char));
         getstr(val);
         setField(indexes, val);

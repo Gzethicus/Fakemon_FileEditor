@@ -2,7 +2,7 @@
 
 using namespace std;
 
-Move::Move () : power{0}, type{""}, max{0}, priority{false}, effect{""}, sprite{""}{}
+Move::Move () : power{0}, type{""}, max{1}, priority{false}, effect{""}, sprite{""}{}
 
 Move::Move (Json::Value val){
     this->power = val["power"].asInt();
@@ -95,6 +95,7 @@ bool Move::prompt(int indexes[2]){
     if (indexes[0] == 3)
         this->priority ^= true;
     else{
+        printw(">");
         char* val = (char*)calloc(32, sizeof(char));
         getstr(val);
         this->setField(indexes, val);

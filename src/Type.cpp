@@ -54,6 +54,7 @@ void Type::display(int indexes[2], stringstream& ss){
 }
 
 bool Type::prompt(int indexes[2]){
+    printw(">");
     char* val = (char*)calloc(32, sizeof(char));
     getstr(val);
     if (indexes[0] == this->order.size()){

@@ -81,6 +81,7 @@ bool Effect::prompt(int indexes[2]){
             this->operation = (this->operation + 1) % 2;
             break;
         case 3:
+            printw(">");
             char* val = (char*)calloc(32, sizeof(char));
             getstr(val);
             this->value = stof(val);

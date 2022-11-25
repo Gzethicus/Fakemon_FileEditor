@@ -84,6 +84,7 @@ void Creature::setField(int indexes[2], string value){
 bool Creature::prompt(int indexes[2]){
     if (indexes[0] < 2 && indexes[1] == -1)
         return false;
+    printw(">");
     char* val = (char*)calloc(32, sizeof(char));
     getstr(val);
     this->setField(indexes, val);

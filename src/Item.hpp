@@ -11,17 +11,16 @@
 using namespace std;
 
 class Item : public IPackageElement {
-    // Attributes
   private:
     string trigger;
     string effect;
 
-    // Operations
   public:
+    /** Instantiates an Item with no trigger and no effect.*/
     Item ();
+    /** Instantiates an Item corresponding to the given Json value.
+     *  @param val A Json::Value that represents the Item to be instanciated.*/
     Item (Json::Value val);
-    /// returns all fields of the instance in a nicely formatted string for printing to console
-    string getFormattedStats ();
     /** Returns the item as a json value.
      *  @return A Json::Value representation of this instance.*/
     Json::Value jsonExport();
@@ -39,7 +38,6 @@ class Item : public IPackageElement {
      *  @return `true` if a field has been modified, `false` if the explorer should go deeper.*/
     bool prompt(int indexes[2]);
 
-    // Setters and Getters
     void setTrigger (string trigger);
     void setEffect (string effect);
 };

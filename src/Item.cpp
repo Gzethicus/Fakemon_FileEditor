@@ -48,6 +48,7 @@ void Item::setField(int indexes[2], string value){
 }
 
 bool Item::prompt(int indexes[2]){
+    printw(">");
     char* val = (char*)calloc(32, sizeof(char));
     getstr(val);
     this->setField(indexes, val);

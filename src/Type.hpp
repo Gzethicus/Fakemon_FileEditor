@@ -17,10 +17,11 @@ class Type : public IPackageElement {
 
     // Operations
   public:
+    /** Instantiates a Type with an empty factor map.*/
     Type ();
+    /** Instantiates a Type corresponding to the given Json value.
+     *  @param val A Json::Value that represents the Type to be instanciated.*/
     Type (Json::Value val);
-    // returns all fields of the instance in a nicely formatted string for printing to console
-    string getFormattedStats ();
 
     /** Returns the type as a json value.
      *  @return A Json::Value representation of this instance.*/
@@ -41,7 +42,9 @@ class Type : public IPackageElement {
      *  @return `true` if a field has been modified, `false` if the explorer should go deeper.*/
     bool prompt(int indexes[2]);
 
-    // Setters and Getters
+    /** Set a multiplying factor to the desired value.
+     *  @param type The type that will receive multiplied damage.
+     *  @param factor The multiplier to apply to damage dealt by this type to given type.*/
     void setFactor (string type, float factor);
 };
 #endif
