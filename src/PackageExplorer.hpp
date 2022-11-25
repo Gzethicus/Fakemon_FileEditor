@@ -14,16 +14,20 @@ class PackageExplorer {
     //Attributes
 private:
     Package* package;
-    int index[3];
+    int index[4];
     int depth;
+    string fileName;
 
 public:
     PackageExplorer(string file);
     void display(bool clearScreen);
     void up();
     void down();
-    void enter();
-    bool leave();
+    bool enter();
+    void leave();
+
+private:
+    void save();
 };
 
 #endif

@@ -35,15 +35,8 @@ public:
   Package (int type);
 
   /** Creates a new package of specified type from the given json string
-   *  @param type
-   *  0 - Creature ||
-   *  1 - Effect ||
-   *  2 - Item ||
-   *  3 - Move ||
-   *  4 - Trigger ||
-   *  5 - Type
    *  @param json A json representation of the package to build.*/
-  Package (int type, string json);
+  Package (string json);
 
   set<string> getNames ();
   IPackageElement* get (string name);

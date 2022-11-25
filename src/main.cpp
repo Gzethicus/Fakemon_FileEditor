@@ -46,11 +46,10 @@ int main(int argc,char* argv[]) {
                 explorer->down();
                 break;
             case KEY_RIGHT:
-                explorer->enter();
+                keepGoing = explorer->enter();
                 break;
             case KEY_LEFT:
-                if (!explorer->leave())
-                    keepGoing = false;
+                explorer->leave();
                 break;
         }
     }

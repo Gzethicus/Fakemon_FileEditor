@@ -8,7 +8,7 @@ using namespace std;
 
 Package::Package (int type) : elements{unordered_map<string, IPackageElement*>()}, type(type) {}
 
-Package::Package (int type, string json) : type(type) {
+Package::Package (string json) {
     Json::CharReaderBuilder builder;
     unique_ptr<Json::CharReader> reader = unique_ptr<Json::CharReader> (builder.newCharReader());
     Json::Value val {};
@@ -16,7 +16,9 @@ Package::Package (int type, string json) : type(type) {
     this->elements = unordered_map<string, IPackageElement*>();
 
     reader->parse(json.c_str(), json.c_str() + json.length(), &val, &err);
-    this->elements.reserve(val.size());
+    this->type = val["Type"].asInt();
+    val.removeMember("Type");
+    this->elements.reserve(val.size() - 1);
 
     for (Json::ValueIterator element = val.begin(); element != val.end(); element++){
         switch (this->type) {
@@ -53,6 +55,7 @@ IPackageElement* Package::get (string name){
 
 Json::Value Package::jsonExport (){
     Json::Value package;
+    package["Type"] = this->type;
     for(string key : this->order)
         package[key] = this->elements[key]->jsonExport();
     return package;
@@ -93,8 +96,9 @@ void Package::addElement (string name, IPackageElement* element){
 stringstream Package::display (int indexes[3]){
     stringstream ss;
     int i = 0;
-    if (indexes[0] > this->order.size())
+    if (indexes[0] > (int)this->order.size()){
         indexes[0] = this->order.size();
+    }
     for (string element : this->order) {
         if (indexes[0] == i++) {
             ss << ">" << element << "\n" << this->elements[element]->display(&(indexes[1])).str();
