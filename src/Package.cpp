@@ -49,11 +49,11 @@ set<string> Package::getNames () {
     return this->order;
 }
 
-IPackageElement* Package::get (string name){
+IPackageElement* Package::get (string name) {
     return this->elements[name];
 }
 
-Json::Value Package::jsonExport (){
+Json::Value Package::jsonExport () {
     Json::Value package;
     package["Type"] = this->type;
     for(string key : this->order)
@@ -61,7 +61,7 @@ Json::Value Package::jsonExport (){
     return package;
 }
 
-void Package::addNew(string name){
+void Package::addNew(string name) {
     if (this->order.find(name) != this->order.end())
         return;
     IPackageElement* element;
@@ -88,12 +88,12 @@ void Package::addNew(string name){
     this->addElement(name, element);
 }
 
-void Package::addElement (string name, IPackageElement* element){
+void Package::addElement (string name, IPackageElement* element) {
     this->elements[name] = element;
     this->order.insert(name);
 }
 
-void Package::display (int indexes[3], stringstream& ss){
+void Package::display (int indexes[3], stringstream& ss) {
     int i = 0;
     if (indexes[0] > (int)this->order.size()){
         indexes[0] = this->order.size();
@@ -110,7 +110,7 @@ void Package::display (int indexes[3], stringstream& ss){
     ss << "New\n";
 }
 
-bool Package::prompt(int indexes[3]){
+bool Package::prompt(int indexes[3]) {
     if (indexes[0] == this->order.size()){
         char* val = (char*)calloc(32, sizeof(char));
         getstr(val);
@@ -120,4 +120,22 @@ bool Package::prompt(int indexes[3]){
     if (indexes[1] == -1)
         return false;
     return this->elements[*next(this->order.cbegin(), indexes[0])]->prompt(&indexes[1]);
+}
+
+void Package::erase(int indexes[3]) {
+    int i = 0;
+    if(indexes[1] == -1){
+        for (string element : this->order) {
+            if (indexes[0] == i++) {
+                delete this->elements[element];
+                this->order.erase(element);
+                break;
+            }
+        }
+    } else {
+        for (string element : this->order) {
+            if (indexes[0] == i++)
+                this->elements[element]->erase(&(indexes[1]));
+        }
+    }
 }

@@ -18,16 +18,6 @@ Type::Type (Json::Value val){
     }
 }
 
-string Type::getFormattedStats (){
-    string formatted = "";
-    int indent;
-    for (string type : this->order) {
-        indent = 2 - ((type.length() + 2) /8);  //compute the number of remaining indents to reach a 3 * 8 indent, accounting for " :" (2 chars)
-        formatted += "\t" + type + " :" + string(indent, '\t') + to_string(this->factors[type]) + "\n";
-    }
-    return formatted;
-}
-
 Json::Value Type::jsonExport (){
     Json::Value json;
     for (string type : this->order)
@@ -65,6 +55,10 @@ bool Type::prompt(int indexes[2]){
         this->setField(indexes, val);
     free(val);
     return true;
+}
+
+void Type::erase(int indexes[2]) {
+
 }
 
 #pragma region getset

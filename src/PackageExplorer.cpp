@@ -76,6 +76,12 @@ void PackageExplorer::leave() {
     }
 }
 
+void PackageExplorer::erase() {
+    if (this->depth == 0)
+        return;
+    this->package->erase(&(this->index[1]));
+}
+
 void PackageExplorer::save() {
     Json::StreamWriterBuilder builder;
     builder["commentStyle"] = "None";

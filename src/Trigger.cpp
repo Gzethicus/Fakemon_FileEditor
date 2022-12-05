@@ -9,12 +9,6 @@ Trigger::Trigger (Json::Value val){
     this->threshold = val["threshold"].asInt();
 }
 
-string Trigger::getFormattedStats (){
-    string formatted = "\tstat :\t\t" + this->getStringStat() + "\n";
-    formatted += "\tthreshold :\t" + to_string(this->threshold) + "%\n";
-    return formatted;
-}
-
 Json::Value Trigger::jsonExport (){
     Json::Value json;
     json["stat"] = this->stat;
@@ -58,6 +52,10 @@ bool Trigger::prompt(int indexes[2]){
         free(val);
     }
     return true;
+}
+
+void Trigger::erase(int indexes[2]) {
+
 }
 
 #pragma region getset

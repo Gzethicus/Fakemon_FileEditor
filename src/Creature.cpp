@@ -14,19 +14,6 @@ Creature::Creature (Json::Value val){
     this->type = val["type"].asString();
 }
 
-string Creature::getFormattedStats (){
-    string formatted = "\tstats :\n";
-    formatted += "\t\tHP :\t" + to_string(this->stats[0]) + "\n";
-    formatted += "\t\tATK :\t" + to_string(this->stats[1]) + "\n";
-    formatted += "\t\tDEF :\t" + to_string(this->stats[2]) + "\n";
-    formatted += "\t\tSPD :\t" + to_string(this->stats[3]) + "\n";
-    formatted += "\tmoves :\n";
-    for (int i = 0; i < NMOVES; i++)
-        formatted += "\t\t" + (this->moves[i].empty() ? "undefined !" : this->moves[i]) + "\n";
-    formatted += "\ttype :\t" + (this->type.empty() ? "undefined !" : this->type) + "\n";
-    return formatted;
-}
-
 Json::Value Creature::jsonExport (){
     Json::Value json;
 
@@ -118,6 +105,10 @@ void Creature::displayMoves(int index[1], stringstream& ss){
             ss << ">";
         ss << (this->moves[i].empty() ? "undefined !" : this->moves[i]) << "\n";
     }
+}
+
+void Creature::erase(int indexes[2]) {
+
 }
 
 #pragma region getset

@@ -14,6 +14,7 @@
 #include "PackageExplorer.hpp"
 
 #define STDIN_FILENO 0
+#define KEY_DEL 0330
 
 int main(int argc,char* argv[]) {
     PackageExplorer* explorer;
@@ -50,6 +51,9 @@ int main(int argc,char* argv[]) {
                 break;
             case KEY_LEFT:
                 explorer->leave();
+                break;
+            case KEY_DEL:
+                explorer->erase();
                 break;
         }
     }

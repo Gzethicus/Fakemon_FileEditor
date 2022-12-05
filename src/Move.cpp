@@ -13,16 +13,6 @@ Move::Move (Json::Value val){
     this->sprite = val["sprite"].asString();
 }
 
-std::string Move::getFormattedStats (){
-    string formatted = "\tpower :\t\t" + to_string(this->power) + "\n";
-    formatted += "\ttype :\t\t" + (this->type.empty() ? "neutral" : this->type) + "\n";
-    formatted += "\tmax :\t\t" + to_string(this->max) + "\n";
-    formatted += "\thasPriority :\t" + to_string(this->priority) + "\n";
-    formatted += "\teffect :\t" + (this->effect.empty() ? "none" : this->effect) + "\n";
-    formatted += "\tsprite :\t" + (this->sprite.empty() ? "none" : this->sprite) + "\n";
-    return formatted;
-}
-
 Json::Value Move::jsonExport ( ){
     Json::Value json;
     json["power"] = this->power;
@@ -102,6 +92,10 @@ bool Move::prompt(int indexes[2]){
         free(val);
     }
     return true;
+}
+
+void Move::erase(int indexes[2]) {
+
 }
 
 void Move::setPower (int power){

@@ -35,6 +35,10 @@ class Effect : public IPackageElement {
      *  @return `true` if a field has been modified, `false` if the explorer should go deeper.*/
     bool prompt(int indexes[2]);
 
+    /** Deletes the selected item if possible.
+     *  @param indexes the tree to the selected item.*/
+    void erase (int indexes[2]);
+
     void setOperator (int operation);
     void setValue (float value);
     void setTarget (bool self);

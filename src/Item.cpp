@@ -9,12 +9,6 @@ Item::Item (Json::Value val){
     this->effect = val["effect"].asString();
 }
 
-string Item::getFormattedStats (){
-    string formatted = "\ttrigger :\t" + (this->trigger.empty() ? "undefined !" : this->trigger) + "\n";
-    formatted += "\teffect :\t" + (this->effect.empty() ? "undefined !" : this->effect) + "\n";
-    return formatted;
-}
-
 Json::Value Item::jsonExport (){
     Json::Value json;
     json["trigger"] = this->trigger;
@@ -54,6 +48,10 @@ bool Item::prompt(int indexes[2]){
     this->setField(indexes, val);
     free(val);
     return true;
+}
+
+void Item::erase(int indexes[2]) {
+
 }
 
 #pragma region getset

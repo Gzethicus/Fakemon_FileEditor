@@ -29,5 +29,9 @@ class IPackageElement {
          *  @param indexes The indexes of the field to change.
          *  @return `true` if a field has been modified, `false` if the explorer should go deeper.*/
         virtual bool prompt(int indexes[2]) = 0;
+
+        /** Deletes the selected item if possible.
+         *  @param indexes the tree to the selected item.*/
+        virtual void erase (int indexes[2]) = 0;
 };
 #endif

@@ -11,14 +11,6 @@ Effect::Effect (Json::Value val){
     this->value = val["value"].asFloat();
 }
 
-string Effect::getFormattedStats (){
-    string formatted = "\ttarget :\t" + this->getStringTarget() + "\n";
-    formatted += "\tstat :\t\t" + this->getStringStat() + "\n";
-    formatted += "\toperation :\t" + this->getStringOperator() + "\n";
-    formatted += "\tvalue :\t\t" + to_string(this->value) + "\n";
-    return formatted;
-}
-
 Json::Value Effect::jsonExport (){
     Json::Value json;
     json["targetSelf"] = this->targetSelf;
@@ -91,6 +83,9 @@ bool Effect::prompt(int indexes[2]){
     return true;
 }
 
+void Effect::erase(int indexes[2]) {
+
+}
 #pragma region getset
 inline string Effect::getStringOperator (){
     switch (this->operation){

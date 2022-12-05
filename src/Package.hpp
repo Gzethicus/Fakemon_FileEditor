@@ -62,5 +62,9 @@ public:
    *  @param indexes the tree to the selected item.
    *  @return `true` if a field has been modified, `false` if the explorer should go deeper.*/
   bool prompt (int indexes[3]);
+
+  /** Deletes the selected item.
+   *  @param indexes the tree to the selected item.*/
+  void erase (int indexes[3]);
 };
 #endif
