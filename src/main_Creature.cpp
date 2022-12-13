@@ -1,6 +1,8 @@
 #include <iostream>
 #include <memory>
 #include <jsoncpp/json/json.h>
+#include <ncurses.h>
+#include <termios.h>
 
 #include "Creature.hpp"
 #include "Package.hpp"
@@ -29,15 +31,16 @@ int main(int argc,char* argv[]) {
     test2->setType("DefaultTypes/Grass");
 
     Package testPackage = Package(0);
+    testPackage.addNew("FireSheep");
     testPackage.addElement("Fire Wasp", test);
     testPackage.addElement("Grass Tortoise", test2);
 
-    cout << "test:\n" << test->getFormattedStats();
-    cout << "test2:\n" << test2->getFormattedStats();
+    //cout << "test:\n" << test->getFormattedStats();
+    //cout << "test2:\n" << test2->getFormattedStats();
     cout << Json::writeString(builder, test->jsonExport()) << endl;
     cout << Json::writeString(builder, testPackage.jsonExport()) << endl;
 
-    Package testPackage2 = Package(0, Json::writeString(builder, testPackage.jsonExport()));
+    Package testPackage2 = Package(Json::writeString(builder, testPackage.jsonExport()));
 
     return 0;
 }

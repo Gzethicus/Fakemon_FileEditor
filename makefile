@@ -2,7 +2,7 @@ JSON = -ljsoncpp
 CLI = -lncurses
 BMAIN = -o file-editor build/main.o
 BUILD = -o build/main.o -c src/main
-BUILCOMP = g++ ${BMAIN} ${BELEMENTS} ${BPACKAGE} ${JSON}
+BUILCOMP = g++ ${BMAIN} ${BELEMENTS} ${BPACKAGE} ${JSON} ${CLI}
 B = mkdir -p build
 
 BPACKAGE = build/Package.o

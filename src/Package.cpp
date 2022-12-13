@@ -18,7 +18,7 @@ Package::Package (string json) {
     reader->parse(json.c_str(), json.c_str() + json.length(), &val, &err);
     this->type = val["Type"].asInt();
     val.removeMember("Type");
-    this->elements.reserve(val.size() - 1);
+    this->elements.reserve(val.size());
 
     for (Json::ValueIterator element = val.begin(); element != val.end(); element++){
         switch (this->type) {
@@ -105,13 +105,14 @@ void Package::display (int indexes[3], stringstream& ss) {
         } else
             ss << element << "\n";
     }
-    if (indexes[0] == this->order.size())
+    if (indexes[0] == i)
         ss << ">";
     ss << "New\n";
 }
 
 bool Package::prompt(int indexes[3]) {
     if (indexes[0] == this->order.size()){
+        printw(">");
         char* val = (char*)calloc(32, sizeof(char));
         getstr(val);
         this->addNew(val);

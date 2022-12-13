@@ -3,6 +3,7 @@
 
 #include <string>
 #include <unordered_map>
+#include <set>
 #include <jsoncpp/json/json.h>
 
 #include "IPackageElement.hpp"
@@ -13,7 +14,7 @@ class Type : public IPackageElement {
     // Attributes
   private:
     unordered_map<string, float> factors;
-    vector<string> order;
+    set<string> order;
 
     // Operations
   public:

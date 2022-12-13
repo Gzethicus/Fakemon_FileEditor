@@ -29,15 +29,15 @@ class Move : public IPackageElement {
      *  @param ss A stringstream to append content to, preformatted for printing to console.*/
     void display(int indexes[2], stringstream& ss);
 
-      /** Sets an instance field.
-          @param index The index of the field to edit.
-          @param value A string representation of the new value.*/
-      void setField(int indexes[2], string value);
+    /** Sets an instance field.
+        @param index The index of the field to edit.
+        @param value A string representation of the new value.*/
+    void setField(int indexes[2], string value);
       
-      /** Execute the action to change the field designed by the given indexes
-       *  @param indexes The indexes of the field to change.
-       *  @return `true` if a field has been modified, `false` if the explorer should go deeper.*/
-      bool prompt(int indexes[2]);
+    /** Execute the action to change the field designed by the given indexes
+     *  @param indexes The indexes of the field to change.
+     *  @return `true` if a field has been modified, `false` if the explorer should go deeper.*/
+    bool prompt(int indexes[2]);
 
     /** Deletes the selected item if possible.
      *  @param indexes the tree to the selected item.*/

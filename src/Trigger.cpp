@@ -27,7 +27,7 @@ void Trigger::display(int indexes[2], stringstream& ss){
     ss << "\t";
     if (indexes[0] == 1)
         ss << ">";
-    ss << "threshold :\t" << to_string(this->threshold) << "\n";
+    ss << "threshold :\t" << to_string(this->threshold) << "%\n";
 }
 
 void Trigger::setField(int indexes[2], string value){

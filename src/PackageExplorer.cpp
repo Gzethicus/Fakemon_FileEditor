@@ -1,4 +1,5 @@
 #include <memory>
+#include <sys/stat.h>
 #include <fstream>
 #include <iostream>
 #include "PackageExplorer.hpp"
@@ -8,16 +9,21 @@ using namespace std;
 
 PackageExplorer::PackageExplorer(string fileName): index{0, 0, -1, -1}, depth{1} {
     this->fileName = fileName;
-    fstream file;
-    file.open(fileName, fstream::in);
-    string json;
-    getline(file, json, '\n');
-    this->package = new Package(json);
-    file.close();
+    struct stat buffer;
+    if (stat (fileName.c_str(), &buffer) == 0) {
+        fstream file;
+        file.open(fileName, fstream::in);
+        string json;
+        getline(file, json, '\n');
+        this->package = new Package(json);
+        file.close();
+    } else {
+        this->package = new Package(1);
+    }
 }
 
 void PackageExplorer::display(bool clearScreen) {
-    if (refresh){
+    if (clearScreen) {
         clear();
         refresh();
     }

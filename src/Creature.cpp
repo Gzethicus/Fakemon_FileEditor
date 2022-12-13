@@ -2,7 +2,7 @@
 
 using namespace std;
 
-Creature::Creature() : stats{100, 100, 100, 100}, moves{{""}}, type{""}{}
+Creature::Creature() : stats{100, 100, 100, 100}, moves{""}, type{""}{}
 
 Creature::Creature (Json::Value val){
     for (int i = 0; i < 4; i++)
@@ -40,13 +40,13 @@ void Creature::display(int indexes[2], stringstream& ss){
     if (indexes[0] == 0)
         ss << ">";
     ss << "stat :\n";
-    this->displayStats(indexes[0] == 0 ? &(indexes[1]) : (int*) -1, ss);
+    this->displayStats(indexes[0] == 0 ? &(indexes[1]) : new int(-1), ss);
 
     ss << "\t";
     if (indexes[0] == 1)
         ss << ">";
     ss << "moves :\n";
-    this->displayMoves(indexes[0] == 1 ? &(indexes[1]) : (int*) -1, ss);
+    this->displayMoves(indexes[0] == 1 ? &(indexes[1]) : new int(-1), ss);
 
     ss << "\t";
     if (indexes[0] == 2)
