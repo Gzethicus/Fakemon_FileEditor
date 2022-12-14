@@ -21,6 +21,10 @@ private:
   int type;
   unordered_map<string, IPackageElement*> elements;
   set<string> order;
+  set<string> moveDependencies;
+  set<string> typeDependencies;
+  set<string> effectDependencies;
+  set<string> triggerDependencies;
 
   // Operations
 public:
@@ -52,6 +56,10 @@ public:
   /** Adds an element to this package.
    *  @param name The unique identifier for the element.*/
   void addNew (string name);
+
+  /** Adds a dependency to this package.
+   *  @param name The file name of the dependency.*/
+  void addDependency (string name);
   
   /** Returns the package in a human-readable stringstream.
    *  @param indexes The selected path.

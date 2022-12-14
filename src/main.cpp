@@ -14,7 +14,7 @@
 #include "PackageExplorer.hpp"
 
 #define STDIN_FILENO 0
-#define KEY_DEL 0330
+#define KEY_DEL 0512
 
 int main(int argc,char* argv[]) {
     PackageExplorer* explorer;
@@ -54,6 +54,10 @@ int main(int argc,char* argv[]) {
                 break;
             case KEY_DEL:
                 explorer->erase();
+                break;
+            default:
+                printw("key pressed : %d\n", ch);
+                getch();
                 break;
         }
     }

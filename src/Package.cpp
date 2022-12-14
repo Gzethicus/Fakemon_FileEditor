@@ -1,8 +1,11 @@
 #include <sstream>
+#include <sys/stat.h>
+#include <fstream>
 #include <ncurses.h>
 #include <memory>
 #include "Package.hpp"
 
+#define SPECIAL_LINES 2
 
 using namespace std;
 
@@ -18,6 +21,24 @@ Package::Package (string json) {
     reader->parse(json.c_str(), json.c_str() + json.length(), &val, &err);
     this->type = val["Type"].asInt();
     val.removeMember("Type");
+
+    Json::Value dependencies = val["Dependencies"]["Moves"];
+    for (Json::ValueIterator dependency = dependencies.begin(); dependency != dependencies.end(); dependency++) {
+        this->moveDependencies.insert(dependencies[dependency.index()].asString());
+    }
+    dependencies = val["Dependencies"]["Types"];
+    for (Json::ValueIterator dependency = dependencies.begin(); dependency != dependencies.end(); dependency++) {
+        this->typeDependencies.insert(dependencies[dependency.index()].asString());
+    }
+    dependencies = val["Dependencies"]["Effects"];
+    for (Json::ValueIterator dependency = dependencies.begin(); dependency != dependencies.end(); dependency++) {
+        this->effectDependencies.insert(dependencies[dependency.index()].asString());
+    }
+    dependencies = val["Dependencies"]["Triggers"];
+    for (Json::ValueIterator dependency = dependencies.begin(); dependency != dependencies.end(); dependency++) {
+        this->triggerDependencies.insert(dependencies[dependency.index()].asString());
+    }
+    val.removeMember("Dependencies");
     this->elements.reserve(val.size());
 
     for (Json::ValueIterator element = val.begin(); element != val.end(); element++){
@@ -56,6 +77,30 @@ IPackageElement* Package::get (string name) {
 Json::Value Package::jsonExport () {
     Json::Value package;
     package["Type"] = this->type;
+    if(this->moveDependencies.size() > 0) {
+        package["Dependencies"]["Moves"] = Json::arrayValue;
+        for(string dependency : this->moveDependencies) {
+            package["Dependencies"]["Moves"].append(dependency);
+        }
+    }
+    if(this->typeDependencies.size() > 0) {
+        package["Dependencies"]["Types"] = Json::arrayValue;
+        for(string dependency : this->typeDependencies) {
+            package["Dependencies"]["Types"].append(dependency);
+        }
+    }
+    if(this->effectDependencies.size() > 0) {
+        package["Dependencies"]["Effects"] = Json::arrayValue;
+        for(string dependency : this->effectDependencies) {
+            package["Dependencies"]["Effects"].append(dependency);
+        }
+    }
+    if(this->triggerDependencies.size() > 0) {
+        package["Dependencies"]["Triggers"] = Json::arrayValue;
+        for(string dependency : this->triggerDependencies) {
+            package["Dependencies"]["Triggers"].append(dependency);
+        }
+    }
     for(string key : this->order)
         package[key] = this->elements[key]->jsonExport();
     return package;
@@ -93,10 +138,53 @@ void Package::addElement (string name, IPackageElement* element) {
     this->order.insert(name);
 }
 
+void Package::addDependency(string name) {
+    struct stat buffer;
+    if (stat ((name + ".json").c_str(), &buffer) == 0) {
+        fstream file;
+        file.open(name + ".json", fstream::in);
+        string json;
+        Json::CharReaderBuilder builder;
+        Json::Value val {};
+        string err {};
+        Json::parseFromStream(builder, file, &val, &err);
+        file.close();
+        switch(val["Type"].asInt()) {
+            case 1:
+                this->effectDependencies.insert(name);
+                break;
+            case 3:
+                this->moveDependencies.insert(name);
+                break;
+            case 4:
+                this->triggerDependencies.insert(name);
+                break;
+            case 5:
+                this->typeDependencies.insert(name);
+                break;
+        }
+    }
+}
+
 void Package::display (int indexes[3], stringstream& ss) {
     int i = 0;
-    if (indexes[0] > (int)this->order.size()){
-        indexes[0] = this->order.size();
+    if (indexes[0] > (int)this->order.size() - 1 + SPECIAL_LINES){
+        indexes[0] = this->order.size() - 1 + SPECIAL_LINES;
+    }
+    if (indexes[0] == i++) {
+        int j = 0;
+        ss << ">Dependencies\n";
+        for(string dependency : this->moveDependencies)
+            ss << "\t" << ((j++ == indexes[1]) ? ">" : "") << dependency << "\n";
+        for(string dependency : this->typeDependencies)
+            ss << "\t" << ((j++ == indexes[1]) ? ">" : "") << dependency << "\n";
+        for(string dependency : this->effectDependencies)
+            ss << "\t" << ((j++ == indexes[1]) ? ">" : "") << dependency << "\n";
+        for(string dependency : this->triggerDependencies)
+            ss << "\t" << ((j++ == indexes[1]) ? ">" : "") << dependency << "\n";
+        ss << "\t" << ((j++ == indexes[1]) ? ">" : "") << "New\n";
+    } else {
+        ss << "Dependencies\n";
     }
     for (string element : this->order) {
         if (indexes[0] == i++) {
@@ -105,13 +193,13 @@ void Package::display (int indexes[3], stringstream& ss) {
         } else
             ss << element << "\n";
     }
-    if (indexes[0] == i)
+    if (indexes[0] == i++)
         ss << ">";
     ss << "New\n";
 }
 
 bool Package::prompt(int indexes[3]) {
-    if (indexes[0] == this->order.size()){
+    if (indexes[0] == this->order.size() - 1 + SPECIAL_LINES){
         printw(">");
         char* val = (char*)calloc(32, sizeof(char));
         getstr(val);
@@ -120,11 +208,19 @@ bool Package::prompt(int indexes[3]) {
     }
     if (indexes[1] == -1)
         return false;
-    return this->elements[*next(this->order.cbegin(), indexes[0])]->prompt(&indexes[1]);
+    if (indexes[0] == 0) {
+        if (indexes[1] == this->moveDependencies.size() + this->typeDependencies.size() + this->effectDependencies.size() + this->triggerDependencies.size()) {
+            char* val = (char*)calloc(32, sizeof(char));
+            getstr(val);
+            this->addDependency(val);
+            return true;
+        }
+    }
+    return this->elements[*next(this->order.cbegin(), indexes[0] - 1)]->prompt(&indexes[1]);
 }
 
 void Package::erase(int indexes[3]) {
-    int i = 0;
+    int i = 1;
     if(indexes[1] == -1){
         for (string element : this->order) {
             if (indexes[0] == i++) {
@@ -135,8 +231,10 @@ void Package::erase(int indexes[3]) {
         }
     } else {
         for (string element : this->order) {
-            if (indexes[0] == i++)
+            if (indexes[0] == i++) {
                 this->elements[element]->erase(&(indexes[1]));
+                break;
+            }
         }
     }
 }
