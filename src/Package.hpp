@@ -66,6 +66,11 @@ public:
    *  @param ss A stringstream to append content to, preformatted for printing to console.*/
   void display (int indexes[3], stringstream& ss);
 
+  /** Changes the indexes to navigate to the given element.
+   *  @param name The name of the element to navigate to.
+   *  @param indexes The path to edit to represent searched element.*/
+  void navigateTo (string name, int indexes[3]);
+
   /** Attempts to change selected item, potentially prompting from CLI.
    *  @param indexes the tree to the selected item.
    *  @return `true` if a field has been modified, `false` if the explorer should go deeper.*/

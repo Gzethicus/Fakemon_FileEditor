@@ -25,6 +25,7 @@ public:
     void down();
     bool enter();
     void leave();
+    void navByName();
     void erase();
 
 private:

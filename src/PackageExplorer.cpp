@@ -82,6 +82,13 @@ void PackageExplorer::leave() {
     }
 }
 
+void PackageExplorer::navByName() {
+    printw(">");
+    char* val = (char*)calloc(32, sizeof(char));
+    getstr(val);
+    this->package->navigateTo(val, &this->index[1]);
+}
+
 void PackageExplorer::erase() {
     if (this->depth == 0)
         return;

@@ -15,6 +15,7 @@
 
 #define STDIN_FILENO 0
 #define KEY_DEL 0512
+#define KEY_BSPACE 0012
 
 int main(int argc,char* argv[]) {
     PackageExplorer* explorer;
@@ -51,6 +52,10 @@ int main(int argc,char* argv[]) {
                 break;
             case KEY_LEFT:
                 explorer->leave();
+                break;
+            case KEY_ENTER:
+            case KEY_BSPACE:
+                explorer->navByName();
                 break;
             case KEY_DEL:
                 explorer->erase();

@@ -1,3 +1,4 @@
+#include <cstring>
 #include <sstream>
 #include <sys/stat.h>
 #include <fstream>
@@ -106,7 +107,7 @@ Json::Value Package::jsonExport () {
     return package;
 }
 
-void Package::addNew(string name) {
+void Package::addNew (string name) {
     if (this->order.find(name) != this->order.end())
         return;
     IPackageElement* element;
@@ -138,7 +139,7 @@ void Package::addElement (string name, IPackageElement* element) {
     this->order.insert(name);
 }
 
-void Package::addDependency(string name) {
+void Package::addDependency (string name) {
     struct stat buffer;
     if (stat ((name + ".json").c_str(), &buffer) == 0) {
         fstream file;
@@ -198,7 +199,18 @@ void Package::display (int indexes[3], stringstream& ss) {
     ss << "New\n";
 }
 
-bool Package::prompt(int indexes[3]) {
+void Package::navigateTo (string name, int indexes[3]) {
+    int i = 1;
+    for(string element : this->order) {
+        if(!strcmp(element.c_str(), name.c_str())) {
+            indexes[0] = i;
+            break;
+        }
+        i++;
+    }
+}
+
+bool Package::prompt (int indexes[3]) {
     if (indexes[0] == this->order.size() - 1 + SPECIAL_LINES){
         printw(">");
         char* val = (char*)calloc(32, sizeof(char));
@@ -219,7 +231,7 @@ bool Package::prompt(int indexes[3]) {
     return this->elements[*next(this->order.cbegin(), indexes[0] - 1)]->prompt(&indexes[1]);
 }
 
-void Package::erase(int indexes[3]) {
+void Package::erase (int indexes[3]) {
     int i = 1;
     if(indexes[1] == -1){
         for (string element : this->order) {
