@@ -18,8 +18,13 @@ PackageExplorer::PackageExplorer(string fileName): index{0, 0, -1, -1}, depth{1}
         this->package = new Package(json);
         file.close();
     } else {
-        this->package = new Package(0);
+        throw runtime_error("File not found");
     }
+}
+
+PackageExplorer::PackageExplorer(string fileName, int type): index{0, 0, -1, -1}, depth{1} {
+    this->fileName = fileName;
+    this->package = new Package(type);
 }
 
 void PackageExplorer::display(bool clearScreen) {

@@ -19,11 +19,18 @@
 
 int main(int argc,char* argv[]) {
     PackageExplorer* explorer;
-    if (argc != 2) {
-        cout << "Invalid use, call using the following command :\n./file-editor <fileName>\n";
+    if (argc < 2) {
+        cout << "Invalid use, call using the following command :\n./file-editor <fileName> [if newfile : <filetype:0-5>]\n";
         return 1;
+    } else if (argc < 3) {
+        try {
+            explorer = new PackageExplorer(argv[1]);
+        } catch(runtime_error) {
+            cout << "File not found. To create a new file add the file type as argument (0-5).\n";
+            return 1;
+        }
     } else {
-        explorer = new PackageExplorer(argv[1]);
+        explorer = new PackageExplorer(argv[1], stoi(argv[2]));
     }
     initscr();
     keypad(stdscr, true);
