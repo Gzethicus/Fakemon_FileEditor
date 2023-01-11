@@ -17,15 +17,15 @@ int main(int argc,char* argv[]) {
     test->setMax(2);
     test->setPower(90);
     test->setPriority(true);
-    test->setSprite("DefaultMoveSprite/Water_Bolt");
-    test->setType("DefaultType/Abyss");
+    test->setSprite("Water_Bolt");
+    test->setType("Abyss");
 
     Move* test2 = new Move();
     test2->setMax(1);
     test2->setPower(130);
     test2->setPriority(false);
-    test2->setSprite("DefaultMoveSprite/Fire_Blast");
-    test2->setType("DefaultType/Infernal");
+    test2->setSprite("Fire_Blast");
+    test2->setType("Infernal");
 
     Package testPackage = Package(3);
     testPackage.addElement("Water_Bolt", test);

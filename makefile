@@ -7,7 +7,7 @@ B = mkdir -p build
 
 BPACKAGE = build/Package.o
 BEXPLORER = build/PackageExplorer.o
-BEF = build/Effect.o
+BEF = build/Aura.o
 BMO = build/Move.o
 BTR = build/Trigger.o
 BIT = build/Item.o
@@ -15,10 +15,10 @@ BTY = build/Type.o
 BCR = build/Creature.o
 BELEMENTS = ${BEF} ${BMO} ${BTR} ${BIT} ${BTY} ${BCR}
 
-OELEMENTS = Effect.o Move.o Trigger.o Item.o Type.o Creature.o
+OELEMENTS = Aura.o Move.o Trigger.o Item.o Type.o Creature.o
 
 HPA = src/Package.hpp
-HEF = src/Effect.hpp
+HEF = src/Aura.hpp
 HMO = src/Move.hpp
 HTR = src/Trigger.hpp
 HIT = src/Item.hpp
@@ -42,16 +42,16 @@ Package.o: ${OELEMENTS} ${HELEMENTS} ${HPA}
 	g++ -o ${BPACKAGE} -c src/Package.cpp
 
 
-Effects: Effect.o main_Effect.o Package.o
+Auras: Aura.o main_Aura.o Package.o
 	${BUILCOMP}
 
-main_Effect.o:
+main_Aura.o:
 	$B
-	g++ ${BUILD}_Effect.cpp
+	g++ ${BUILD}_Aura.cpp
 
-Effect.o: ${HEF}
+Aura.o: ${HEF}
 	$B
-	g++ -o ${BEF} -c src/Effect.cpp
+	g++ -o ${BEF} -c src/Aura.cpp
 
 
 Moves: Move.o main_Move.o Package.o

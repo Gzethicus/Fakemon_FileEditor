@@ -4,7 +4,7 @@
 #include <ncurses.h>
 #include <termios.h>
 
-#include "Effect.hpp"
+#include "Aura.hpp"
 #include "Move.hpp"
 #include "Trigger.hpp"
 #include "Item.hpp"

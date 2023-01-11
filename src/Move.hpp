@@ -11,10 +11,10 @@ class Move : public IPackageElement {
     string type;
     int max;
     bool priority;
-    string effect;
+    string aura;
     string sprite;
   public:
-    /** Instantiates a Move with no power, no type, one max charge, no priority, no effect and no sprite.*/
+    /** Instantiates a Move with no power, no type, one max charge, no priority, no aura and no sprite.*/
     Move ();
     /** Instantiates a Move corresponding to the given Json value.
      *  @param val A Json::Value that represents the Move to be instanciated.*/
@@ -47,7 +47,7 @@ class Move : public IPackageElement {
     void setType (string type);
     void setMax (int max);
     void setPriority (bool priority);
-    void setEffect (string effect);
+    void setAura (string aura);
     void setSprite (string sprite);
 };
 #endif

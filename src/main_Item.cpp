@@ -14,12 +14,12 @@ int main(int argc,char* argv[]) {
     builder["indentation"] = "";
 
     Item* test = new Item();
-    test->setEffect("DefaultEffect/AtkBuf");
-    test->setTrigger("DefaultTriggers/Low_HP");
+    test->setAura("AtkBuf");
+    test->setTrigger("Low_HP");
 
     Item* test2 = new Item();
-    test2->setEffect("DefaultEffect/AtkBuf");
-    test2->setTrigger("DefaulTriggers/High_ATK");
+    test2->setAura("AtkBuf");
+    test2->setTrigger("High_ATK");
 
     Package testPackage = Package(2);
     testPackage.addElement("Berserker's scarf", test);

@@ -2,7 +2,7 @@
 #include <memory>
 #include <jsoncpp/json/json.h>
 
-#include "Effect.hpp"
+#include "Aura.hpp"
 #include "Package.hpp"
 
 using namespace std;
@@ -13,13 +13,13 @@ int main(int argc,char* argv[]) {
     builder["commentStyle"] = "None";
     builder["indentation"] = "";
 
-    Effect* test = new Effect();
+    Aura* test = new Aura();
     test->setTarget(true);
     test->setTargetStat(1);
     test->setOperator(1);
     test->setValue(1.2f);
 
-    Effect* test2 = new Effect();
+    Aura* test2 = new Aura();
     test2->setTarget(false);
     test2->setTargetStat(2);
     test2->setOperator(0);

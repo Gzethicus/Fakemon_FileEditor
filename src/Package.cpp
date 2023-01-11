@@ -31,9 +31,9 @@ Package::Package (string json) {
     for (Json::ValueIterator dependency = dependencies.begin(); dependency != dependencies.end(); dependency++) {
         this->typeDependencies.insert(dependencies[dependency.index()].asString());
     }
-    dependencies = val["Dependencies"]["Effects"];
+    dependencies = val["Dependencies"]["Auras"];
     for (Json::ValueIterator dependency = dependencies.begin(); dependency != dependencies.end(); dependency++) {
-        this->effectDependencies.insert(dependencies[dependency.index()].asString());
+        this->auraDependencies.insert(dependencies[dependency.index()].asString());
     }
     dependencies = val["Dependencies"]["Triggers"];
     for (Json::ValueIterator dependency = dependencies.begin(); dependency != dependencies.end(); dependency++) {
@@ -48,7 +48,7 @@ Package::Package (string json) {
                 this->elements[element.name()] = new Creature(val[element.name()]);
                 break;
             case 1:
-                this->elements[element.name()] = new Effect(val[element.name()]);
+                this->elements[element.name()] = new Aura(val[element.name()]);
                 break;
             case 2:
                 this->elements[element.name()] = new Item(val[element.name()]);
@@ -90,10 +90,10 @@ Json::Value Package::jsonExport () {
             package["Dependencies"]["Types"].append(dependency);
         }
     }
-    if(this->effectDependencies.size() > 0) {
-        package["Dependencies"]["Effects"] = Json::arrayValue;
-        for(string dependency : this->effectDependencies) {
-            package["Dependencies"]["Effects"].append(dependency);
+    if(this->auraDependencies.size() > 0) {
+        package["Dependencies"]["Auras"] = Json::arrayValue;
+        for(string dependency : this->auraDependencies) {
+            package["Dependencies"]["Auras"].append(dependency);
         }
     }
     if(this->triggerDependencies.size() > 0) {
@@ -115,8 +115,8 @@ void Package::addNew (string name) {
         case 0: // Creature
             element = new Creature();
             break;
-        case 1: // Effect
-            element = new Effect();
+        case 1: // Aura
+            element = new Aura();
             break;
         case 2: // Item
             element = new Item();
@@ -152,7 +152,7 @@ void Package::addDependency (string name) {
         file.close();
         switch(val["Type"].asInt()) {
             case 1:
-                this->effectDependencies.insert(name);
+                this->auraDependencies.insert(name);
                 break;
             case 3:
                 this->moveDependencies.insert(name);
@@ -179,7 +179,7 @@ void Package::display (int indexes[3], stringstream& ss) {
             ss << "\t" << ((j++ == indexes[1]) ? ">" : "") << dependency << "\n";
         for(string dependency : this->typeDependencies)
             ss << "\t" << ((j++ == indexes[1]) ? ">" : "") << dependency << "\n";
-        for(string dependency : this->effectDependencies)
+        for(string dependency : this->auraDependencies)
             ss << "\t" << ((j++ == indexes[1]) ? ">" : "") << dependency << "\n";
         for(string dependency : this->triggerDependencies)
             ss << "\t" << ((j++ == indexes[1]) ? ">" : "") << dependency << "\n";
@@ -221,7 +221,7 @@ bool Package::prompt (int indexes[3]) {
     if (indexes[1] == -1)
         return false;
     if (indexes[0] == 0) {
-        if (indexes[1] == this->moveDependencies.size() + this->typeDependencies.size() + this->effectDependencies.size() + this->triggerDependencies.size()) {
+        if (indexes[1] == this->moveDependencies.size() + this->typeDependencies.size() + this->auraDependencies.size() + this->triggerDependencies.size()) {
             char* val = (char*)calloc(32, sizeof(char));
             getstr(val);
             this->addDependency(val);

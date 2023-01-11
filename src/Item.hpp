@@ -6,17 +6,17 @@
 
 #include "IPackageElement.hpp"
 #include "Trigger.hpp"
-#include "Effect.hpp"
+#include "Aura.hpp"
 
 using namespace std;
 
 class Item : public IPackageElement {
   private:
     string trigger;
-    string effect;
+    string aura;
 
   public:
-    /** Instantiates an Item with no trigger and no effect.*/
+    /** Instantiates an Item with no trigger and no aura.*/
     Item ();
     /** Instantiates an Item corresponding to the given Json value.
      *  @param val A Json::Value that represents the Item to be instanciated.*/
@@ -43,6 +43,6 @@ class Item : public IPackageElement {
     void erase (int indexes[2]);
 
     void setTrigger (string trigger);
-    void setEffect (string effect);
+    void setAura (string aura);
 };
 #endif

@@ -2,14 +2,14 @@
 
 using namespace std;
 
-Move::Move () : power{0}, type{""}, max{1}, priority{false}, effect{""}, sprite{""}{}
+Move::Move () : power{0}, type{""}, max{1}, priority{false}, aura{""}, sprite{""}{}
 
 Move::Move (Json::Value val){
     this->power = val["power"].asInt();
     this->type = val["type"].asString();
     this->max = val["max"].asInt();
     this->priority = val["priority"].asBool();
-    this->effect = val["effect"].asString();
+    this->aura = val["aura"].asString();
     this->sprite = val["sprite"].asString();
 }
 
@@ -19,7 +19,7 @@ Json::Value Move::jsonExport ( ){
     json["type"] = this->type;
     json["max"] = this->max;
     json["priority"] = this->priority;
-    json["effect"] = this->effect;
+    json["aura"] = this->aura;
     json["sprite"] = this->sprite;
     return json;
 }
@@ -50,7 +50,7 @@ void Move::display(int indexes[2], stringstream& ss){
     ss << "\t";
     if (indexes[0] == 4)
         ss << ">";
-    ss << "effect :\t" << (this->effect.empty() ? "none" : this->effect) << "\n";
+    ss << "aura :\t\t" << (this->aura.empty() ? "none" : this->aura) << "\n";
 
     ss << "\t";
     if (indexes[0] == 5)
@@ -73,7 +73,7 @@ void Move::setField(int indexes[2], string value){
             this->priority = !value.empty();
             break;
         case 4:
-            this->effect = value;
+            this->aura = value;
             break;
         case 5:
             this->sprite = value;
@@ -110,8 +110,8 @@ void Move::setMax (int max){
 void Move::setPriority (bool priority){
     this->priority = priority;
 }
-void Move::setEffect (std::string effect){
-    this->effect = effect;
+void Move::setAura (std::string aura){
+    this->aura = aura;
 }
 void Move::setSprite (std::string sprite){
     this->sprite = sprite;

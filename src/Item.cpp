@@ -2,17 +2,17 @@
 
 using namespace std;
 
-Item::Item() : trigger{""}, effect{""}{}
+Item::Item() : trigger{""}, aura{""}{}
 
 Item::Item (Json::Value val){
     this->trigger = val["trigger"].asString();
-    this->effect = val["effect"].asString();
+    this->aura = val["aura"].asString();
 }
 
 Json::Value Item::jsonExport (){
     Json::Value json;
     json["trigger"] = this->trigger;
-    json["effect"] = this->effect;
+    json["aura"] = this->aura;
     return json;
 }
 
@@ -27,7 +27,7 @@ void Item::display (int indexes[2], stringstream& ss){
     ss << "\t";
     if (indexes[0] == 1)
         ss << ">";
-    ss << "effect :\t" << (this->effect.empty() ? "undefined !" : this->effect) << "\n";
+    ss << "aura :\t\t" << (this->aura.empty() ? "undefined !" : this->aura) << "\n";
 }
 
 void Item::setField(int indexes[2], string value){
@@ -36,7 +36,7 @@ void Item::setField(int indexes[2], string value){
             this->trigger = value;
             break;
         case 1:
-            this->effect = value;
+            this->aura = value;
             break;
     }
 }
@@ -59,7 +59,7 @@ void Item::setTrigger (string trigger){
     this->trigger = trigger;
 }
 
-void Item::setEffect (string effect){
-    this->effect = effect;
+void Item::setAura (string aura){
+    this->aura = aura;
 }
 #pragma endregion getset

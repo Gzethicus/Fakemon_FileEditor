@@ -1,28 +1,26 @@
-#include "Effect.hpp"
+#include "Aura.hpp"
 
 using namespace std;
 
-Effect::Effect() : targetSelf{false}, targetStat{0}, operation{0}, value{0.f}{}
+Aura::Aura() : targetSelf{false}, targetStat{0}, value{0}{}
 
-Effect::Effect (Json::Value val){
+Aura::Aura (Json::Value val){
     this->targetSelf = val["targetSelf"].asBool();
     this->targetStat = val["stat"].asInt();
-    this->operation = val["operation"].asInt();
-    this->value = val["value"].asFloat();
+    this->value = val["value"].asInt();
 }
 
-Json::Value Effect::jsonExport (){
+Json::Value Aura::jsonExport (){
     Json::Value json;
     json["targetSelf"] = this->targetSelf;
     json["stat"] = this->targetStat;
-    json["operation"] = this->operation;
     json["value"] = this->value;
     return json;
 }
 
-void Effect::display(int indexes[2], stringstream& ss){
-    if (indexes[0] > 3)
-        indexes[0] = 3;
+void Aura::display(int indexes[2], stringstream& ss){
+    if (indexes[0] > 2)
+        indexes[0] = 2;
     ss << "\t";
     if (indexes[0] == 0)
         ss << ">";
@@ -36,15 +34,10 @@ void Effect::display(int indexes[2], stringstream& ss){
     ss << "\t";
     if (indexes[0] == 2)
         ss << ">";
-    ss << "operation :\t" << this->getStringOperator() << "\n";
-
-    ss << "\t";
-    if (indexes[0] == 3)
-        ss << ">";
-    ss << (indexes[0] == 3 ? "value :\t" : "value :\t\t") << to_string(this->value) << "\n";
+    ss << (indexes[0] == 2 ? "value :\t" : "value :\t\t") << to_string(this->value) << "%\n";
 }
 
-void Effect::setField(int indexes[2], string value){
+void Aura::setField(int indexes[2], string value){
     switch (indexes[0]){
         case 0:
             this->targetSelf = !value.empty();
@@ -53,15 +46,12 @@ void Effect::setField(int indexes[2], string value){
             this->targetStat = stoi(value);
             break;
         case 2:
-            this->operation = stoi(value);
-            break;
-        case 3:
-            this->value = stof(value);
+            this->value = stoi(value);
             break;
     }
 }
 
-bool Effect::prompt(int indexes[2]){
+bool Aura::prompt(int indexes[2]){
     switch (indexes[0]){
         case 0:
             this->targetSelf ^= true;
@@ -70,9 +60,6 @@ bool Effect::prompt(int indexes[2]){
             this->targetStat = (this->targetStat + 1) % 4;
             break;
         case 2:
-            this->operation = (this->operation + 1) % 2;
-            break;
-        case 3:
             printw(">");
             char* val = (char*)calloc(32, sizeof(char));
             getstr(val);
@@ -83,26 +70,15 @@ bool Effect::prompt(int indexes[2]){
     return true;
 }
 
-void Effect::erase(int indexes[2]) {
+void Aura::erase(int indexes[2]) {
 
 }
 #pragma region getset
-inline string Effect::getStringOperator (){
-    switch (this->operation){
-        case 0:
-            return "Add";
-        case 1:
-            return "Mult";
-        default:
-            return "Undefined";
-    }
-}
-
-inline string Effect::getStringTarget (){
+inline string Aura::getStringTarget (){
     return this->targetSelf ? "Self" : "Opponent";
 }
 
-inline string Effect::getStringStat (){
+inline string Aura::getStringStat (){
     switch (this->targetStat){
         case 0:
             return "HP";
@@ -117,19 +93,15 @@ inline string Effect::getStringStat (){
     }
 }
 
-void Effect::setTarget (bool self){
+void Aura::setTarget (bool self){
     this->targetSelf = self;
 }
 
-void Effect::setTargetStat (int stat){
+void Aura::setTargetStat (int stat){
     this->targetStat = stat;
 }
 
-void Effect::setOperator (int operation){
-    this->operation = operation;
-}
-
-void Effect::setValue (float value){
+void Aura::setValue (int value){
     this->value = value;
 }
 #pragma endregion getset

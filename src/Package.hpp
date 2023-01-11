@@ -7,7 +7,7 @@
 #include <jsoncpp/json/json.h>
 
 #include "Creature.hpp"
-#include "Effect.hpp"
+#include "Aura.hpp"
 #include "Item.hpp"
 #include "Move.hpp"
 #include "Trigger.hpp"
@@ -23,7 +23,7 @@ private:
   set<string> order;
   set<string> moveDependencies;
   set<string> typeDependencies;
-  set<string> effectDependencies;
+  set<string> auraDependencies;
   set<string> triggerDependencies;
 
   // Operations
@@ -31,7 +31,7 @@ public:
   /** Creates a new empty package of specified type
    *  @param type
    *  0 - Creature ||
-   *  1 - Effect ||
+   *  1 - Aura ||
    *  2 - Item ||
    *  3 - Move ||
    *  4 - Trigger ||

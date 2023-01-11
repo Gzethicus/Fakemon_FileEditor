@@ -1,27 +1,26 @@
-#ifndef EFFECT__H
-#define EFFECT__H
+#ifndef AURA__H
+#define AURA__H
 
 #include "IPackageElement.hpp"
 
 using namespace std;
 
-class Effect : public IPackageElement {
+class Aura : public IPackageElement {
   private:
-    int operation;
-    float value;
+    int value;
     bool targetSelf;
     int targetStat;
 
   public:
-    /** Instantiates an additive Effect of value 0, on opponent's HP.*/
-    Effect ();
-    /** Instantiates an Effect corresponding to the given Json value.
-     *  @param val A Json::Value that represents the Effect to be instanciated.*/
-    Effect (Json::Value val);
-    /** Returns the effect as a json value.
+    /** Instantiates an Aura with multiplier 0, on opponent's HP.*/
+    Aura ();
+    /** Instantiates an Aura corresponding to the given Json value.
+     *  @param val A Json::Value that represents the Aura to be instanciated.*/
+    Aura (Json::Value val);
+    /** Returns the aura as a json value.
      *  @return A Json::Value representation of this instance.*/
     Json::Value jsonExport ();
-    /** Displays the effect to the console in a human-readable way.
+    /** Displays the aura to the console in a human-readable way.
      *  @param indexes The selected path.
      *  @param ss A stringstream to append content to, preformatted for printing to console.*/
     void display(int indexes[2], stringstream& ss);
@@ -39,13 +38,11 @@ class Effect : public IPackageElement {
      *  @param indexes the tree to the selected item.*/
     void erase (int indexes[2]);
 
-    void setOperator (int operation);
-    void setValue (float value);
+    void setValue (int value);
     void setTarget (bool self);
     void setTargetStat (int stat);
 
   private:
-    inline string getStringOperator ();
     inline string getStringTarget ();
     inline string getStringStat ();
 };
