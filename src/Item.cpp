@@ -22,7 +22,7 @@ void Item::display (int indexes[2], stringstream& ss){
     ss << "\t";
     if (indexes[0] == 0)
         ss << ">";
-    ss << "trigger :\t" << (this->trigger.empty() ? "undefined !" : this->trigger) << "\n";
+    ss << "trigger :\t" << (this->trigger.empty() ? "permanent" : this->trigger) << "\n";
 
     ss << "\t";
     if (indexes[0] == 1)
