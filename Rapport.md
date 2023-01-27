@@ -1,6 +1,6 @@
 # File Editor
 L'exécutable file-editor a pour but de simplifier et accélérer la création et édition des fichiers Json définissant les créatures et objets
-utilisables lors d'un championnat donné.<br>
+utilisables lors d'un championnat donné.  
 Ainsi, cela nous permet en tant que développeurs de perdre moins de temps à rédiger du boilerplate en Json, et de se concentrer sur ce qui définit
 vraiment les divers éléments du jeu, mais permet également, en distribuant l'exécutable avec le jeu ou en l'intégrant plus tard avec une interface
 graphique, aux joueurs de personnaliser leurs championnats.
@@ -15,25 +15,25 @@ graphique, aux joueurs de personnaliser leurs championnats.
 - [ ] Mise en évidence d'éléments introuvables dans les dépendances
 
 # Architecture
-L'architecture du programme est organisée comme suit :<br>
-la fonction [main](#main) crée un PackageExplorer avec les arguments donnés à l'exécution, et en appelle les méthodes de navigation.<br>
+L'architecture du programme est organisée comme suit :
+la fonction [main](#main) crée un PackageExplorer avec les arguments donnés à l'exécution, et en appelle les méthodes de navigation.  
 Le [PackageExplorer](#PackageExplorer) crée un Package à partir du contenu du fichier donné en argument, ou en crée un vide si le type de fichier
-a été spécifié lors de l'appel à l'exécutable. Il gère la navigation au plus haut niveau, ainsi que les entrées/sorties.<br>
+a été spécifié lors de l'appel à l'exécutable. Il gère la navigation au plus haut niveau, ainsi que les entrées/sorties.  
 Le [Package](#Package) parse un string au format Json et enregistre ses éléments sous forme d'objets héritant de l'interface IPackageElement.
 Il sert principalement à agglomérer les IPackageElement et offre des méthodes qui, le plus souvent, appellent les méthodes de ses éléments pour
-créer un effet aggloméré.<br>
+créer un effet aggloméré.  
 Les [IPackageElement](#IPackageElement) représentent les éléments primaires du jeu. Ils sont au nombre de 6 et sont identifiés par un numéro :
 Creature(0), Item(2), Move(3), Type(5), Aura(1), Trigger(4).
 
 ## main
-Utilise la librairie ncurses pour simplifier l'utilisation du terminal.<br>
-A chaque appui de touche, avant de rafraîchir l'affichage, appelle une méthode de son PackageExplorer comme tel :<br>
-<kbd>↑</kbd> : Up<br>
-<kbd>↓</kbd> : Down<br>
-<kbd>←</kbd> : Leave<br>
-<kbd>→</kbd> : Enter<br>
-<kbd>Return</kbd> : NavByName<br>
-<kbd>Delete</kbd> : Erase<br>
+Utilise la librairie ncurses pour simplifier l'utilisation du terminal.  
+A chaque appui de touche, avant de rafraîchir l'affichage, appelle une méthode de son PackageExplorer comme tel :  
+<kbd>↑</kbd> : Up  
+<kbd>↓</kbd> : Down  
+<kbd>←</kbd> : Leave  
+<kbd>→</kbd> : Enter  
+<kbd>Return</kbd> : NavByName  
+<kbd>Delete</kbd> : Erase  
 
 ## PackageExplorer
 L'objet PackageExplorer retient l'arborescence de sa sélection sous forme d'un C-array d'entiers, sa profondeur courante, le nom du fichier ouvert, ainsi
@@ -74,7 +74,7 @@ Il propose les méthodes suivantes :
 
 ## Package
 L'objet Package conserve l'identifiant du type de ses objets, une hashMap de ses éléments, un ensemble de leurs noms,
-ainsi que les ensembles de ses dépendances.<br>
+ainsi que les ensembles de ses dépendances.  
 Il propose les méthodes suivantes :
 <details>
   <summary>GetNames</summary>
